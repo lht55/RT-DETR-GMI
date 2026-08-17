@@ -151,11 +151,11 @@ class DETRLoss(nn.Module):
             # loss[name_giou] = self.wiou_loss(pred_bboxes, gt_bboxes, ret_iou=False, ratio=0.7, d=0.0, u=0.95, **{'scale':0.0}) # Wise-ShapeIoU,Wise-Inner-ShapeIoU,Wise-Focaler-ShapeIoU
             # loss[name_giou] = self.wiou_loss(pred_bboxes, gt_bboxes, ret_iou=False, ratio=0.7, d=0.0, u=0.95, **{'mpdiou_hw':2}) # Wise-MPDIoU,Wise-Inner-MPDIoU,Wise-Focaler-MPDIoU
         else:
-            loss[name_giou] = 1.0 - bbox_iou(pred_bboxes, gt_bboxes, xywh=True, GIoU=True)
+            # loss[name_giou] = 1.0 - bbox_iou(pred_bboxes, gt_bboxes, xywh=True, GIoU=True)
             # loss[name_giou] = 1.0 - bbox_inner_iou(pred_bboxes, gt_bboxes, xywh=True, GIoU=True, ratio=0.7) # Inner IoU
             # loss[name_giou] = 1.0 - bbox_focaler_iou(pred_bboxes, gt_bboxes, xywh=True, GIoU=True, d=0.0, u=0.95) # Focaler IoU
             # loss[name_giou] = 1.0 - bbox_mpdiou(pred_bboxes, gt_bboxes, xywh=True, mpdiou_hw=2) # MPDIoU
-            # loss[name_giou] = 1.0 - bbox_inner_mpdiou(pred_bboxes, gt_bboxes, xywh=True, mpdiou_hw=2, ratio=0.7) # Inner-MPDIoU
+            loss[name_giou] = 1.0 - bbox_inner_mpdiou(pred_bboxes, gt_bboxes, xywh=True, mpdiou_hw=2, ratio=0.7) # Inner-MPDIoU
             # loss[name_giou] = 1.0 - bbox_focaler_mpdiou(pred_bboxes, gt_bboxes, xywh=True, mpdiou_hw=2, d=0.0, u=0.95) # Focaler-MPDIoU
         
         if self.nwd_loss:
