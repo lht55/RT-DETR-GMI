@@ -1,0 +1,10 @@
+predicted\true,black_core,crack,finger,horizontal_dislocation,short_circuit,star_crack,thick_line,vertical_dislocation,background
+black_core,0.85,0.00,0.00,0.00,0.04,0.00,0.00,0.00,0.09
+crack,0.00,0.47,0.00,0.00,0.00,0.21,0.00,0.00,0.24
+finger,0.01,0.01,0.86,0.00,0.00,0.00,0.01,0.00,0.41
+horizontal_dislocation,0.00,0.00,0.00,1.00,0.00,0.00,0.00,0.00,0.04
+short_circuit,0.01,0.00,0.00,0.00,0.96,0.00,0.00,0.00,0.00
+star_crack,0.00,0.00,0.00,0.00,0.00,0.79,0.00,0.00,0.05
+thick_line,0.01,0.00,0.00,0.00,0.00,0.00,0.72,0.00,0.11
+vertical_dislocation,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.96,0.06
+background,0.12,0.51,0.14,0.00,0.00,0.00,0.28,0.04,0.00
