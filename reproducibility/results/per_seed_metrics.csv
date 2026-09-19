@@ -1,0 +1,103 @@
+﻿dataset,source_table,split,experiment_group,model_or_config,seed_or_run,best_epoch,precision_pct,recall_pct,f1_score_pct,map50_pct,map50_95_pct,params_m,gflops_g,end_to_end_fps,notes
+PVEL-AD,Table 3,validation,MSLA model selection,1 branch; kernels=(3),0,169,88.97,83.62,86.21,89.1,61.96,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,1 branch; kernels=(3),42,65,85.04,80.31,82.61,84.62,59.67,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,1 branch; kernels=(3),3407,209,88.11,82.29,85.1,88.75,62.07,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,"2 branches; kernels=(3,3)",0,200,86.23,86.34,86.28,89.25,62.19,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,"2 branches; kernels=(3,3)",42,74,82.76,78.97,80.82,85.21,60.27,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,"2 branches; kernels=(3,3)",3407,96,84.7,82.04,83.35,85.97,59.78,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,"4 branches; kernels=(3,3,3,3)",0,245,84.8,86.42,85.6,88.1,61.59,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,"4 branches; kernels=(3,3,3,3)",42,206,84.3,85.88,85.08,88.63,61.89,,,,Best validation checkpoint.
+PVEL-AD,Table 3,validation,MSLA model selection,"4 branches; kernels=(3,3,3,3)",3407,160,85.85,84.6,85.22,88.43,61.39,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(3, 3, 3, 3)",0,245,84.8,86.42,85.6,88.1,61.59,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(3, 3, 3, 3)",42,206,84.3,85.88,85.08,88.63,61.89,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(3, 3, 3, 3)",3407,160,85.85,84.6,85.22,88.43,61.39,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(1, 3, 5, 7)",0,143,88.22,81.46,84.71,88.11,62.42,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(1, 3, 5, 7)",42,187,87.42,85.71,86.56,88.75,61.91,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(1, 3, 5, 7)",3407,169,85.87,83.08,84.45,87.67,61.54,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(3, 5, 7, 9)",0,263,88.4,84.54,86.43,89,62.15,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(3, 5, 7, 9)",42,242,89.29,84.02,86.57,88,62,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(3, 5, 7, 9)",3407,216,88.08,86.19,87.12,88.66,61.58,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(5, 7, 9, 11)",0,139,86.54,79.99,83.13,86.08,61.19,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(5, 7, 9, 11)",42,217,83.64,85.42,84.52,87.91,61.41,,,,Best validation checkpoint.
+PVEL-AD,Table 4,validation,MSLA model selection,"4 branches; kernels=(5, 7, 9, 11)",3407,136,88.98,81.54,85.1,88.29,61.1,,,,Best validation checkpoint.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-CIOU,0,,81.96,76.46,77.8,81.42,56.03,,,,Source label: Seed-1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-CIOU,42,,79.3,78.95,77.67,79.2,54.46,,,,Source label: Seed-2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-CIOU,3407,,83.48,77.99,80.33,80.74,56.37,,,,Source label: Seed-3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-DIOU,0,,88.75,73.98,79.76,81.45,56.12,,,,Source label: Seed-1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-DIOU,42,,81.99,76.33,77.94,79.78,55.76,,,,Source label: Seed-2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-DIOU,3407,,82.39,78,79.76,81.14,56.19,,,,Source label: Seed-3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-EIOU,0,,81.59,76.55,77.88,81.17,56.21,,,,Source label: Seed-1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-EIOU,42,,77.84,80.42,77.94,82.52,56.42,,,,Source label: Seed-2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-EIOU,3407,,81.57,79.35,80.19,82.01,57.03,,,,Source label: Seed-3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-GIOU,0,,76.6,76.57,74.73,79.43,54.29,,,,Source label: Seed-1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-GIOU,42,,79.2,77.1,77.32,79.02,55.45,,,,Source label: Seed-2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,inner-GIOU,3407,,85.17,78.49,81.19,81.7,56.5,,,,Source label: Seed-3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,MPDIOU,0,,86.68,77.58,81.17,82.3,56.61,,,,Source label: Seed-1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,MPDIOU,42,,81.18,76.87,77.83,80.53,55.75,,,,Source label: Seed-2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 5,test,Loss-function comparison,MPDIOU,3407,,82.45,77.84,78.57,81.17,56.58,,,,Source label: Seed-3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Baseline,0,,82.09,75.81,77.76,80.32,55.09,19.88,57,159.54,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Baseline,42,,81.1,74.17,76.75,79.33,54.15,19.88,57,153.38,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Baseline,3407,,82.74,75.22,77.61,81.26,55.89,19.88,57,157.04,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS Backbone,0,,85.25,75.58,79.36,80.87,56.66,13.79,46.6,155.23,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS Backbone,42,,80.7,76.63,77.57,80.46,55.87,13.79,46.6,151.96,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS Backbone,3407,,84.29,78.63,81.01,81.29,56.35,13.79,46.6,150.56,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,MSLA-AIFI,0,,77.64,79.35,78.49,81.37,55.78,19.71,57.1,211.29,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,MSLA-AIFI,42,,78.79,75.4,77.06,78.72,54.37,19.71,57.1,223.64,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,MSLA-AIFI,3407,,81.1,75.12,78,81.07,56.81,19.71,57.1,225.61,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,MPMF-Net,0,,79.28,77.95,78.61,80.11,55.21,22.79,55.7,148.99,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,MPMF-Net,42,,79.75,79.06,79.4,81.1,55.88,22.79,55.7,149.23,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,MPMF-Net,3407,,80.63,77.02,78.78,81.46,55.65,22.79,55.7,144.98,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Inner-MPDIoU,0,,82.68,79.31,80.54,81.62,55.99,19.88,57,160.53,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Inner-MPDIoU,42,,84.87,77.1,80.09,81.97,56.83,19.88,57,162.49,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Inner-MPDIoU,3407,,82.69,74.73,77.1,81.56,55.89,19.88,57,159.64,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS + MSLA-AIFI,0,,82.69,76.75,78.57,82.12,56.8,13.62,46.7,195.53,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS + MSLA-AIFI,42,,81.63,78.02,79.34,80.68,55.94,13.62,46.7,204.27,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS + MSLA-AIFI,3407,,82.36,77.35,78.99,81.21,56.34,13.62,46.7,196.55,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS + MSLA-AIFI + MPMF-Net,0,,83.89,79.26,80.58,83.18,57.12,17.08,46.8,181.18,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS + MSLA-AIFI + MPMF-Net,42,,84.63,77.83,79.9,82.86,57.43,17.08,46.8,175.97,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,GCS + MSLA-AIFI + MPMF-Net,3407,,79.93,77.88,78.39,80.87,56.25,17.08,46.8,176.1,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Full model,0,,86.18,78.76,81.53,83.98,57.83,17.08,46.8,183.58,Source label: Seed 1; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Full model,42,,84.7,77.78,80.33,81.69,56.95,17.08,46.8,174.36,Source label: Seed 2; mapped to seed order 0/42/3407.
+PVEL-AD,Table 6,test,Sequential component ablation,Full model,3407,,82.46,76.2,78.26,81.85,57.27,17.08,46.8,175.15,Source label: Seed 3; mapped to seed order 0/42/3407.
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r18,0,,82.09,75.81,,80.32,55.09,19.88,57,159.54,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r18,42,,81.1,74.17,,79.33,54.15,19.88,57,153.38,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r18,3407,,82.74,75.22,,81.26,55.89,19.88,57,157.04,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r34,0,,77.5,76.8,,80.5,56.1,31.12,88.8,157,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r34,42,,79.05,77.29,,80.35,55.83,31.12,88.8,157.78,Exact seed label was not unambiguously preserved in the retained source record.
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r34,3407,,84.83,74.59,,80.65,55.66,31.12,88.8,149.48,Exact seed label was not unambiguously preserved in the retained source record.
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r50,0,,82.79,75.32,,80.71,56.27,41.97,129.6,114,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r50,42,,85.64,76.13,,81.11,56.19,41.97,129.6,123.1,Exact seed label was not unambiguously preserved in the retained source record.
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-r50,3407,,82.64,73.02,,80.23,55.44,41.97,129.6,117.33,Exact seed label was not unambiguously preserved in the retained source record.
+PVEL-AD,Table 7,test,Cross-model comparison,YOLOv8n,0,,68.06,67.37,,70.74,46.39,3,8.1,257,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLOv8n,42,,70.97,68.43,,73.59,48.03,3,8.1,345.8,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLOv8n,3407,,70.81,69.58,,73.52,47.05,3,8.1,370.44,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLOv8s,0,,72.9,64.3,,73.1,46.8,11.13,28.5,320,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLOv8s,42,,69.78,67.93,,71.59,47.2,11.13,28.5,294.62,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLOv8s,3407,,67.26,70,,71.45,47.65,11.13,28.5,278.74,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO10n,0,,72.87,64.85,,70.25,46.2,2.2,6.5,306,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO10n,42,,71.09,68.36,,72.85,46.84,2.2,6.5,406.33,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO10n,3407,,69.03,69.91,,71.05,44.82,2.2,6.5,407.9,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO11n,0,,73.51,62.73,,72.21,45.79,2.58,6.3,327,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO11n,42,,67.69,68.26,,72.02,46.9,2.58,6.3,360.97,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO11n,3407,,73.26,66.7,,72.4,45.85,2.58,6.3,340.54,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO12n,0,,71,63.94,,71.49,46.45,2.5,5.8,289,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO12n,42,,69.37,67.33,,72.65,45.82,2.5,5.8,309.77,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO12n,3407,,66.87,65.2,,70.16,46.16,2.5,5.8,327.63,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO13n,0,,65.84,69.95,,72.19,46.64,2.44,6.1,254,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO13n,42,,68.24,67.21,,71.88,45.85,2.44,6.1,245.75,
+PVEL-AD,Table 7,test,Cross-model comparison,YOLO13n,3407,,68.82,67.01,,72.05,46.79,2.44,6.1,241.75,
+PVEL-AD,Table 7,test,Cross-model comparison,D-FINE-N,0,,76.7,77.1,,80.4,57.5,3.73,7.12,305.13,
+PVEL-AD,Table 7,test,Cross-model comparison,D-FINE-N,42,,78.1,74.2,,78.8,57.1,3.73,7.12,274.98,
+PVEL-AD,Table 7,test,Cross-model comparison,D-FINE-N,3407,,77,73.9,,79.5,56.6,3.73,7.12,279.49,
+PVEL-AD,Table 7,test,Cross-model comparison,D-FINE-S,0,,81.3,76.7,,81.2,58.5,10.18,24.85,259,
+PVEL-AD,Table 7,test,Cross-model comparison,D-FINE-S,42,,81.6,77.8,,82.4,58.7,10.18,24.85,240.49,
+PVEL-AD,Table 7,test,Cross-model comparison,D-FINE-S,3407,,80.5,73.8,,80,57.9,10.18,24.85,252.48,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-GMI,0,,86.18,78.76,,83.98,57.83,17.08,46.8,183.58,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-GMI,42,,84.7,77.78,,81.69,56.95,17.08,46.8,174.36,
+PVEL-AD,Table 7,test,Cross-model comparison,RT-DETR-GMI,3407,,82.46,76.2,,81.85,57.27,17.08,46.8,175.15,
+PV-Multi-Defect,Table 10,test,Independent-dataset repeated experiment,RT-DETR-r18,0,,86.06,72.8,77.08,79.68,51.04,19.88,57,86.76,Final repeated experiment; run order corresponds to seeds 0/42/3407.
+PV-Multi-Defect,Table 10,test,Independent-dataset repeated experiment,RT-DETR-r18,42,,87.46,68.92,74.8,78.21,49.13,19.88,57,91.15,Final repeated experiment; run order corresponds to seeds 0/42/3407.
+PV-Multi-Defect,Table 10,test,Independent-dataset repeated experiment,RT-DETR-r18,3407,,83.09,70.07,75.31,78.74,51.36,19.88,57,96.24,Final repeated experiment; run order corresponds to seeds 0/42/3407.
+PV-Multi-Defect,Table 10,test,Independent-dataset repeated experiment,RT-DETR-GMI,0,,79.97,72.26,74.97,81.16,53.27,17.08,46.8,84.37,Final repeated experiment; run order corresponds to seeds 0/42/3407.
+PV-Multi-Defect,Table 10,test,Independent-dataset repeated experiment,RT-DETR-GMI,42,,76.48,68.4,70.93,76.33,51.06,17.08,46.8,87.38,Final repeated experiment; run order corresponds to seeds 0/42/3407.
+PV-Multi-Defect,Table 10,test,Independent-dataset repeated experiment,RT-DETR-GMI,3407,,81.13,74.4,75.7,79.57,51.72,17.08,46.8,84.71,Final repeated experiment; run order corresponds to seeds 0/42/3407.
