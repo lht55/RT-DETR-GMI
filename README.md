@@ -2,14 +2,13 @@
 
 RT-DETR-GMI is a Python/PyTorch object detection project based on Ultralytics `8.0.201` RT-DETR code with custom model components and configuration.
 
-This repository contains source code and model configuration only. It does not include datasets, training images, labels, trained weights, or checkpoints.
+This repository contains the source code, model configurations, reproducibility documentation, fixed dataset split manifests, and machine-readable numerical results used to support the experiments reported in the revised manuscript. It does not include the original datasets, training images, labels, trained weights, or checkpoints.
 
 ## License and Attribution
 
 This project is based on the Ultralytics `8.0.201` codebase, including RT-DETR framework code from https://github.com/ultralytics/ultralytics. The bundled and modified Ultralytics-derived code is released under the GNU Affero General Public License v3.0 (`AGPL-3.0`), consistent with the upstream Ultralytics license.
 
 Original Ultralytics copyright and license notices are retained in the source files. Third-party modules bundled under `ultralytics/` are not claimed as original project code; see `THIRD_PARTY_NOTICES.md` for the current notice and license audit.
-
 
 ## MSLA Attribution
 
@@ -21,13 +20,16 @@ Please cite the MSLAU-Net paper when discussing or reusing the MSLA idea: https:
 
 ## Project Layout
 
-- `RT-DETR-GMI.yaml`: model configuration.
-- `train.py`: training entry point.
-- `val.py`: validation and metric reporting entry point.
-- `export.py`: model export entry point.
-- `heatmap.py`: Grad-CAM visualization helper.
-- `main_profile.py`: model profiling helper.
-- `ultralytics/`: minimal modified Ultralytics-based framework code needed to run RT-DETR-GMI.
+* `RT-DETR-GMI.yaml`: final RT-DETR-GMI model configuration.
+* `train.py`: training entry point.
+* `val.py`: validation and metric reporting entry point.
+* `export.py`: model export entry point.
+* `heatmap.py`: Grad-CAM visualization helper.
+* `main_profile.py`: model profiling helper.
+* `ultralytics/`: modified Ultralytics-based framework code required to run RT-DETR-GMI and the released ablation configurations.
+* `ultralytics/cfg/model/REPRODUCIBILITY.md`: detailed experimental protocol, model-selection procedure, source-level ablation instructions, evaluation settings, and table-specific reproduction guide.
+* `reproducibility/splits/`: fixed train/validation/test split manifests used in the reported experiments.
+* `reproducibility/results/`: machine-readable per-seed metrics, per-class metrics, representative confusion matrices, and supporting numerical results.
 
 ## Installation
 
@@ -63,6 +65,12 @@ python train.py --model RT-DETR-GMI.yaml --data path/to/data.yaml --epochs 300 -
 
 Training outputs are written under `runs/` by default and are ignored by Git.
 
+For the exact experimental settings, random seeds, dataset splits, model-selection protocol, and table-specific reproduction instructions used in the manuscript, see:
+
+```text
+ultralytics/cfg/model/REPRODUCIBILITY.md
+```
+
 ## Validation
 
 Validate a trained checkpoint by passing both checkpoint and dataset YAML paths:
@@ -71,7 +79,28 @@ Validate a trained checkpoint by passing both checkpoint and dataset YAML paths:
 python val.py --model runs/train/exp/weights/best.pt --data path/to/data.yaml --split test
 ```
 
-`val.py` writes a `paper_data.txt` summary under the validation output directory. No metric values are included in this repository.
+`val.py` writes a `paper_data.txt` summary under the validation output directory.
+
+The repository also provides machine-readable numerical results supporting the repeated-run statistics, ablation studies, detector comparisons, per-class analyses, second-dataset evaluation, and representative confusion matrices reported in the revised manuscript. These files are available under:
+
+```text
+reproducibility/results/
+```
+
+The principal result files include:
+
+```text
+reproducibility/results/per_seed_metrics.csv
+reproducibility/results/per_class_metrics.csv
+reproducibility/results/confusion_matrix_rtdetr_r18_seed0.csv
+reproducibility/results/confusion_matrix_rtdetr_gmi_seed0.csv
+```
+
+The exact dataset split manifests used for the reported experiments are available under:
+
+```text
+reproducibility/splits/
+```
 
 This repository does not provide pretrained or trained model weights. Users must provide their own checkpoint paths. Download URLs may be added later after the files and redistribution terms are confirmed.
 
@@ -94,6 +123,29 @@ python heatmap.py --weight runs/train/exp/weights/best.pt --source path/to/image
 ```
 
 The Grad-CAM helper requires the `grad-cam` package.
+
+## Reproducibility
+
+The repository provides reproducibility materials supporting the experiments reported in Tables 3–11 of the revised manuscript.
+
+The detailed protocol is documented in:
+
+```text
+ultralytics/cfg/model/REPRODUCIBILITY.md
+```
+
+It includes:
+
+* experimental environment and training settings;
+* random seeds `0`, `42`, and `3407`;
+* fixed PVEL-AD and PV-Multi-Defect dataset splits;
+* validation-based MSLA architecture selection;
+* source-level ablation procedures;
+* test-set evaluation protocol;
+* per-table reproduction instructions;
+* machine-readable per-seed and per-class numerical results.
+
+The original image datasets are not redistributed in this repository. Researchers should obtain the corresponding public datasets separately and use the released split manifests to reconstruct the train, validation, and test subsets used in the reported experiments.
 
 ## Third-Party Code and License Notes
 
