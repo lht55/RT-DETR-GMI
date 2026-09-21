@@ -34,27 +34,27 @@ Unless otherwise stated, the remaining training settings were kept unchanged acr
 
 The common RT-DETR training settings are:
 
-| Setting                        |     Value |
-| ------------------------------ | --------: |
-| Epochs                         |       300 |
-| Early-stopping patience        |        40 |
-| Batch size                     |        16 |
-| Input resolution               | 640 × 640 |
-| Optimizer                      |     AdamW |
-| Initial learning rate (`lr0`)  |    0.0001 |
-| Final LR factor (`lrf`)        |       1.0 |
-| Momentum                       |       0.9 |
-| Weight decay                   |    0.0001 |
-| Deterministic training         |      True |
-| Pretrained initialization      |      True |
-| AMP                            |     False |
-| Cache                          |     False |
-| Workers                        |         4 |
-| Nominal batch size (`nbs`)     |        64 |
-| Validation during training     |      True |
-| Training-time validation split |     `val` |
-| Validation IoU                 |       0.7 |
-| Maximum detections             |       300 |
+| Setting | Value |
+| --- | ---: |
+| Epochs | 300 |
+| Early-stopping patience | 40 |
+| Batch size | 16 |
+| Input resolution | 640 × 640 |
+| Optimizer | AdamW |
+| Initial learning rate (`lr0`) | 0.0001 |
+| Final LR factor (`lrf`) | 1.0 |
+| Momentum | 0.9 |
+| Weight decay | 0.0001 |
+| Deterministic training | True |
+| Pretrained initialization | True |
+| AMP | False |
+| Cache | False |
+| Workers | 4 |
+| Nominal batch size (`nbs`) | 64 |
+| Validation during training | True |
+| Training-time validation split | `val` |
+| Validation IoU | 0.7 |
+| Maximum detections | 300 |
 
 The repeated experiments use:
 
@@ -77,6 +77,8 @@ seed: 0
 deterministic: true
 cos_lr: false
 amp: false
+cache: false
+workers: 4
 val: true
 split: val
 iou: 0.7
@@ -118,21 +120,21 @@ warmup_bias_lr = 0.1
 The data-augmentation settings recorded for the experiments are:
 
 | Augmentation parameter | Value |
-| ---------------------- | ----: |
-| `hsv_h`                | 0.015 |
-| `hsv_s`                |   0.7 |
-| `hsv_v`                |   0.4 |
-| `degrees`              |   0.0 |
-| `translate`            |   0.1 |
-| `scale`                |   0.5 |
-| `shear`                |   0.0 |
-| `perspective`          |   0.0 |
-| `flipud`               |   0.0 |
-| `fliplr`               |   0.5 |
-| `mosaic`               |   0.0 |
-| `mixup`                |   0.0 |
-| `copy_paste`           |   0.0 |
-| `close_mosaic`         |     0 |
+| --- | ---: |
+| `hsv_h` | 0.015 |
+| `hsv_s` | 0.7 |
+| `hsv_v` | 0.4 |
+| `degrees` | 0.0 |
+| `translate` | 0.1 |
+| `scale` | 0.5 |
+| `shear` | 0.0 |
+| `perspective` | 0.0 |
+| `flipud` | 0.0 |
+| `fliplr` | 0.5 |
+| `mosaic` | 0.0 |
+| `mixup` | 0.0 |
+| `copy_paste` | 0.0 |
+| `close_mosaic` | 0 |
 
 No additional test-time augmentation was enabled:
 
@@ -159,11 +161,11 @@ The PVEL-AD subset used in this study contains 4,481 images from eight defect ca
 
 The fixed split is:
 
-| Subset     | Images |
-| ---------- | -----: |
-| Train      |  3,604 |
-| Validation |    395 |
-| Test       |    482 |
+| Subset | Images |
+| --- | ---: |
+| Train | 3,604 |
+| Validation | 395 |
+| Test | 482 |
 
 The same split definition is used for all PVEL-AD experiments.
 
@@ -189,11 +191,11 @@ Users should prepare the PVEL-AD dataset locally and construct their dataset YAM
 
 The PV-Multi-Defect dataset version used for the second-dataset experiment contains 1,106 images:
 
-| Subset     | Images |
-| ---------- | -----: |
-| Train      |    771 |
-| Validation |    218 |
-| Test       |    117 |
+| Subset | Images |
+| --- | ---: |
+| Train | 771 |
+| Validation | 218 |
+| Test | 117 |
 
 The exact split manifests are provided under:
 
@@ -230,13 +232,13 @@ reproducibility/results/confusion_matrix_rtdetr_gmi_seed0.csv
 
 This file contains the retained run-level numerical results underlying the repeated-run summaries reported for:
 
+* the primary paired RT-DETR-r18 versus RT-DETR-GMI comparison
 * MSLA branch-number ablation
 * MSLA kernel-configuration ablation
 * bounding-box loss comparison
 * sequential component ablation
 * cross-model comparison
 * PV-Multi-Defect evaluation
-* primary RT-DETR-r18 versus RT-DETR-GMI comparison
 
 The file records the dataset, source table, split, experiment group, model or configuration, seed/run identifier, detection metrics, model complexity information where applicable, and FPS measurements where available.
 
@@ -323,9 +325,106 @@ The corresponding released model configurations should be used instead of machin
 
 # Table-specific reproduction
 
-## 9. Table 3 — MSLA branch-number ablation
+## 9. Table 3 — Paired statistical comparison between RT-DETR-r18 and RT-DETR-GMI
 
-Table 3 evaluates the number of MSLA branches under the following architecture:
+Table 3 reports the paired statistical analysis for the primary comparison between:
+
+```text
+RT-DETR-r18
+RT-DETR-GMI
+```
+
+on the PVEL-AD test subset.
+
+No additional training is required for Table 3. The table uses the same independently trained models used in the principal repeated experiments:
+
+```text
+seed = 0
+seed = 42
+seed = 3407
+```
+
+For each seed, paired differences are defined as:
+
+```text
+RT-DETR-GMI − RT-DETR-r18
+```
+
+and are reported in percentage points.
+
+The paired seed-wise values used in the manuscript are:
+
+| Metric | Seed 0 | Seed 42 | Seed 3407 |
+| --- | --- | --- | --- |
+| mAP50 | 80.32 / 83.98 | 79.33 / 81.69 | 81.26 / 81.85 |
+| mAP50:95 | 55.09 / 57.83 | 54.15 / 56.95 | 55.89 / 57.27 |
+
+Seed-wise values are reported as:
+
+```text
+RT-DETR-r18 / RT-DETR-GMI
+```
+
+The statistical analysis applies a paired two-sided Student's t-test separately to:
+
+```text
+mAP50
+mAP50:95
+```
+
+For each metric, the analysis reports:
+
+```text
+mean paired difference
+t statistic
+degrees of freedom
+p value
+95% confidence interval
+Cohen's dz
+```
+
+with:
+
+```text
+df = n − 1 = 2
+```
+
+and:
+
+```text
+Cohen's dz =
+mean paired difference /
+standard deviation of paired differences
+```
+
+The values reported in Table 3 are:
+
+| Metric | Mean difference (pp) | t | df | p | 95% CI (pp) | Cohen's dz |
+| --- | ---: | ---: | ---: | ---: | --- | ---: |
+| mAP50 | 2.20 | 2.477 | 2 | 0.132 | [-1.62, 6.03] | 1.43 |
+| mAP50:95 | 2.31 | 4.975 | 2 | 0.038 | [0.31, 4.30] | 2.87 |
+
+Statistical significance is defined in the manuscript as:
+
+```text
+p < 0.05
+```
+
+Accordingly, the mAP50 comparison does not reach the predefined significance threshold, whereas the mAP50:95 comparison reaches the p < 0.05 threshold.
+
+Because only three paired observations are available, these inferential statistics should be interpreted cautiously and together with the per-seed results and descriptive statistics.
+
+The underlying per-seed values are available in:
+
+```text
+reproducibility/results/per_seed_metrics.csv
+```
+
+---
+
+## 10. Table 4 — Validation-set ablation study on the number of MSLA branches
+
+Table 4 evaluates the number of MSLA branches under the following architecture:
 
 ```text
 GCS Backbone: enabled
@@ -339,16 +438,16 @@ The convolutional kernel size is fixed at `3 × 3` for every branch.
 The evaluated variants are:
 
 | Branches | Kernel configuration |
-| -------: | -------------------- |
-|        1 | (3)                  |
-|        2 | (3, 3)               |
-|        4 | (3, 3, 3, 3)         |
+| ---: | --- |
+| 1 | (3) |
+| 2 | (3, 3) |
+| 4 | (3, 3, 3, 3) |
 
 The original implementation performed this experiment by modifying the `MSLA` source code directly.
 
-The following equivalent variants reconstruct the branch structures reported in Table 3.
+The following equivalent variants reconstruct the branch structures reported in Table 4.
 
-### 9.1 One branch
+### 10.1 One branch
 
 The full channel dimension is processed by one branch:
 
@@ -389,7 +488,7 @@ class MSLA(nn.Module):
         return final_output.reshape(b, n, self.dim)
 ```
 
-### 9.2 Two branches
+### 10.2 Two branches
 
 The channels are divided equally into two branches, both using `3 × 3` depthwise convolution:
 
@@ -449,7 +548,7 @@ class MSLA(nn.Module):
         return final_output.reshape(b, n, self.dim)
 ```
 
-### 9.3 Four branches
+### 10.3 Four branches
 
 The channels are divided into four equal branches:
 
@@ -493,7 +592,7 @@ self.scale_weights = nn.Parameter(
 
 The four outputs are concatenated along the channel dimension before the final `1 × 1` convolution.
 
-All Table 3 variants were independently trained using:
+All Table 4 variants were independently trained using:
 
 ```text
 seed = 0
@@ -505,7 +604,7 @@ The configurations were compared on the **validation subset**.
 
 The four-branch configuration was selected based on validation performance and fixed before the subsequent kernel-configuration comparison and corresponding test-set inference.
 
-The run-level validation results underlying Table 3 are provided in:
+The run-level validation results underlying Table 4 are provided in:
 
 ```text
 reproducibility/results/per_seed_metrics.csv
@@ -513,9 +612,9 @@ reproducibility/results/per_seed_metrics.csv
 
 ---
 
-## 10. Table 4 — MSLA kernel-configuration ablation
+## 11. Table 5 — Validation-set ablation study on the convolutional kernel configuration of MSLA
 
-Table 4 fixes the number of MSLA branches to four and changes only the four depthwise-convolution kernel sizes.
+Table 5 fixes the number of MSLA branches to four and changes only the four depthwise-convolution kernel sizes.
 
 The architecture remains:
 
@@ -559,7 +658,7 @@ self.dw_conv_9x9 = DepthwiseConv(
 )
 ```
 
-Only the four kernel sizes are changed between the Table 4 configurations.
+Only the four kernel sizes are changed between the Table 5 configurations.
 
 The following remain unchanged:
 
@@ -592,7 +691,7 @@ kernel sizes = (3, 5, 7, 9)
 
 The `(3, 5, 7, 9)` configuration was fixed as the final MSLA-AIFI kernel configuration before the corresponding test-set inference.
 
-The run-level validation results underlying Table 4 are provided in:
+The run-level validation results underlying Table 5 are provided in:
 
 ```text
 reproducibility/results/per_seed_metrics.csv
@@ -600,9 +699,9 @@ reproducibility/results/per_seed_metrics.csv
 
 ---
 
-## 11. Table 5 — Bounding-box loss comparison
+## 12. Table 6 — Comparison of loss functions
 
-Table 5 compares different IoU-based bounding-box regression losses under the fixed architecture:
+Table 6 compares different IoU-based bounding-box regression losses under the fixed architecture:
 
 ```text
 GCS Backbone
@@ -708,7 +807,7 @@ loss[name_giou] = 1.0 - bbox_inner_mpdiou(
 )
 ```
 
-For each Table 5 experiment:
+For each Table 6 experiment:
 
 ```text
 Only one IoU-based loss is enabled.
@@ -754,9 +853,9 @@ The Inner-IoU scaling ratio used in all reported Inner-MPDIoU experiments is:
 ratio=0.7
 ```
 
-Table 5 is a **post-selection test-set comparison** used to characterize the empirical behavior of the predefined Inner-MPDIoU loss relative to alternative regression losses.
+Table 6 is a **post-selection test-set comparison** used to characterize the empirical behavior of the predefined Inner-MPDIoU loss relative to alternative regression losses.
 
-The Table 5 test results were not used to select the loss function or to perform subsequent architecture or hyperparameter tuning.
+The Table 6 test results were not used to select the loss function or to perform subsequent architecture or hyperparameter tuning.
 
 The underlying run-level results are provided in:
 
@@ -766,9 +865,9 @@ reproducibility/results/per_seed_metrics.csv
 
 ---
 
-## 12. Table 6 — Component ablation
+## 13. Table 7 — Ablation experiments on the components of RT-DETR-GMI
 
-Table 6 uses:
+Table 7 uses:
 
 ```text
 a = GCS Backbone
@@ -804,7 +903,7 @@ seed = 3407
 
 using the same PVEL-AD split and common training protocol.
 
-Table 6 was conducted after the model design had been fixed.
+Table 7 was conducted after the model design had been fixed.
 
 Its test-set results were used to characterize the individual and combined contributions of the proposed components and were not used to guide subsequent architecture or hyperparameter selection.
 
@@ -816,9 +915,9 @@ reproducibility/results/per_seed_metrics.csv
 
 ---
 
-## 13. Table 7 — Comparison with other detectors
+## 14. Table 8 — Performance comparison of different detectors on PVEL-AD
 
-Table 7 compares RT-DETR-GMI with the general-purpose detector baselines reported in the manuscript.
+Table 8 compares RT-DETR-GMI with the general-purpose detector baselines reported in the manuscript.
 
 For the RT-DETR family, the repository provides:
 
@@ -870,19 +969,19 @@ rather than retrospectively rewriting all external implementations into one comm
 
 Where an external baseline is reproduced independently, researchers should use the corresponding official implementation and model configuration associated with that model rather than assuming that the latest software defaults are identical to those used in this study.
 
-The complete retained run-level numerical records underlying Table 7 are provided in:
+The complete retained run-level numerical records underlying Table 8 are provided in:
 
 ```text
 reproducibility/results/per_seed_metrics.csv
 ```
 
-The Table 7 comparison is descriptive. Differences between the reported means are not interpreted as establishing statistical superiority across all compared detector families.
+The Table 8 comparison is descriptive. Differences between the reported means are not interpreted as establishing statistical superiority across all compared detector families.
 
 ---
 
-## 14. Table 8 — Per-class comparison
+## 15. Table 9 — Per-class Precision, Recall, and AP50 comparison
 
-Table 8 reports class-wise:
+Table 9 reports class-wise:
 
 ```text
 Precision
@@ -909,7 +1008,7 @@ seed = 3407
 
 and are summarized as mean ± SD.
 
-No separate Table 8 training experiment is required.
+No separate Table 9 training experiment is required.
 
 The underlying class-wise numerical results are provided in:
 
@@ -919,9 +1018,9 @@ reproducibility/results/per_class_metrics.csv
 
 ---
 
-## 15. Table 9 — Class-wise component analysis
+## 16. Table 10 — Incremental class-wise AP50 changes in the sequential RT-DETR-GMI ablation
 
-Table 9 is derived from the sequential component-ablation models used in Table 6.
+Table 10 is derived from the sequential component-ablation models used in Table 7.
 
 The model sequence is:
 
@@ -933,11 +1032,11 @@ RT-DETR-r18
 → GCS + MSLA + MPMF + Inner-MPDIoU
 ```
 
-The corresponding models are the same independently trained configurations used for the Table 6 sequential ablation.
+The corresponding models are the same independently trained configurations used for the Table 7 sequential ablation.
 
-No independent Table 9 training experiment is required.
+No independent Table 10 training experiment is required.
 
-For each defect category, Table 9 reports the change in three-run mean AP50 between adjacent configurations in the sequential ablation pathway.
+For each defect category, Table 10 reports the change in three-run mean AP50 between adjacent configurations in the sequential ablation pathway.
 
 The underlying class-wise records are provided in:
 
@@ -947,9 +1046,9 @@ reproducibility/results/per_class_metrics.csv
 
 ---
 
-## 16. Table 10 — PV-Multi-Defect evaluation
+## 17. Table 11 — Performance comparison on PV-Multi-Defect
 
-Table 10 evaluates:
+Table 11 evaluates:
 
 ```text
 RT-DETR-r18
@@ -998,79 +1097,6 @@ It is not a zero-shot or direct cross-dataset domain-transfer experiment.
 
 ---
 
-## 17. Table 11 — Paired per-seed primary comparison
-
-Table 11 reports the paired per-seed results for the primary comparison between:
-
-```text
-RT-DETR-r18
-RT-DETR-GMI
-```
-
-on PVEL-AD.
-
-No additional training is required for Table 11.
-
-The table uses the same independently trained models already used in the primary repeated experiments:
-
-```text
-seed = 0
-seed = 42
-seed = 3407
-```
-
-For each seed, paired differences are defined as:
-
-```text
-RT-DETR-GMI − RT-DETR-r18
-```
-
-and are reported in percentage points.
-
-The statistical analysis uses the three matched paired observations for:
-
-```text
-mAP50
-mAP50:95
-```
-
-A paired two-sided t-test is applied separately to each metric.
-
-The analysis reports:
-
-```text
-mean paired difference
-95% confidence interval
-t statistic
-degrees of freedom
-p value
-Cohen's dz
-```
-
-with:
-
-```text
-df = n − 1 = 2
-```
-
-and:
-
-```text
-Cohen's dz =
-mean paired difference /
-standard deviation of paired differences
-```
-
-Because only three paired observations are available, the inferential statistics should be interpreted cautiously.
-
-The underlying per-seed values are available in:
-
-```text
-reproducibility/results/per_seed_metrics.csv
-```
-
----
-
 ## 18. Model-selection and test-set evaluation protocol
 
 The training, validation, and test subsets have different roles.
@@ -1100,7 +1126,7 @@ with zero weights assigned to Precision and Recall in the fitness calculation.
 
 The best validation checkpoint produced by the training framework is used for subsequent evaluation.
 
-The validation subset was also used for the MSLA architecture-selection experiments reported in Tables 3 and 4.
+The validation subset was also used for the MSLA architecture-selection experiments reported in Tables 4 and 5.
 
 The selection sequence was:
 
@@ -1120,11 +1146,11 @@ The test subset was not used to select:
 * training hyperparameters
 * training checkpoint
 
-Inner-MPDIoU was defined as part of the proposed RT-DETR-GMI methodology before the post-selection loss comparison reported in Table 5.
+Inner-MPDIoU was defined as part of the proposed RT-DETR-GMI methodology before the post-selection loss comparison reported in Table 6.
 
-Table 5 evaluates fixed loss alternatives after the model-design stage in order to characterize their empirical behavior.
+Table 6 evaluates fixed loss alternatives after the model-design stage in order to characterize their empirical behavior.
 
-Table 6 similarly provides post-selection component-ablation results after the model design had been fixed.
+Table 7 similarly provides post-selection component-ablation results after the model design had been fixed.
 
 Accordingly, multiple fixed configurations were evaluated on the test subset for post-selection analysis.
 
@@ -1234,9 +1260,9 @@ backend = native PyTorch
 
 FPS represents end-to-end inference throughput under the standardized evaluation setting, including preprocessing, model inference, and postprocessing.
 
-For Tables 3 and 4, architecture selection is based on validation-set performance rather than test-set performance.
+For Tables 4 and 5, architecture selection is based on validation-set performance rather than test-set performance.
 
-For Tables 5 and 6, the reported test-set experiments are post-selection analyses and were not used to guide subsequent model tuning.
+For Tables 6 and 7, the reported test-set experiments are post-selection analyses and were not used to guide subsequent model tuning.
 
 ---
 
@@ -1331,13 +1357,13 @@ while keeping the remaining experimental conditions unchanged unless otherwise d
 
 ## 22. Important note on source-level ablations
 
-Tables 3–5 were performed as source-level ablations rather than through dedicated YAML switches.
+Tables 4–6 were performed as source-level ablations rather than through dedicated YAML switches.
 
 Specifically:
 
-* **Table 3:** modifies the number of MSLA branches.
-* **Table 4:** modifies only the four MSLA depthwise-convolution kernel sizes.
-* **Table 5:** modifies only the active IoU-based bounding-box regression loss.
+* **Table 4:** modifies the number of MSLA branches.
+* **Table 5:** modifies only the four MSLA depthwise-convolution kernel sizes.
+* **Table 6:** modifies only the active IoU-based bounding-box regression loss.
 
 This document intentionally records those source-level changes instead of introducing a new configuration mechanism that was not used in the reported experiments.
 
@@ -1350,13 +1376,13 @@ To reproduce a reported experiment:
 1. Prepare the corresponding public dataset.
 2. Use the exact released train/validation/test split manifest.
 3. Select the corresponding released model YAML.
-4. Apply the documented source-level modification when reproducing Tables 3–5.
+4. Apply the documented source-level modification when reproducing Tables 4–6.
 5. Keep all remaining training arguments unchanged.
 6. Train independently with seeds `0`, `42`, and `3407` where repeated runs are reported.
 7. Use the validation subset for MSLA architecture selection and checkpoint selection.
 8. Select the best validation checkpoint generated by the training framework.
 9. Evaluate the fixed checkpoint on the corresponding test subset.
-10. For Tables 5 and 6, treat the test-set results as post-selection characterization rather than model-selection evidence.
+10. For Tables 6 and 7, treat the test-set results as post-selection characterization rather than model-selection evidence.
 11. Do not use post-selection test results to revise architecture or training hyperparameters.
 12. Report mean ± SD for repeated-run metrics and fixed values for Params and GFLOPs.
 13. Use the released machine-readable numerical results for comparison with the manuscript summaries.
