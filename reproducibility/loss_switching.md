@@ -189,7 +189,7 @@ where:
 d = Inner-MPDIoU
 ```
 
-For the final configuration containing component `d`:
+For any Table 7 configuration that includes component `d`, including the `d`-only ablation and the final `a + b + c + d` configuration:
 
 ```text
 Active loss: Inner-MPDIoU
