@@ -1338,20 +1338,19 @@ The corresponding repeated runs change the random seed to:
 while keeping the remaining experimental conditions unchanged unless otherwise documented.
 
 ---
-
 ## 22. Important note on source-level ablations
 
-Tables 4–6 were performed as source-level ablations rather than through dedicated YAML switches.
+Tables 4–6 were performed through documented source-level modifications rather than dedicated YAML switches.
 
 Specifically:
 
 * **Table 4:** modifies the number of MSLA branches.
 * **Table 5:** modifies only the four MSLA depthwise-convolution kernel sizes.
 * **Table 6:** modifies only the active IoU-based bounding-box regression loss.
+* **Table 7:** configurations without component `d` use the standard GIoU loss, whereas configurations containing component `d` use Inner-MPDIoU. The corresponding source-level loss switching procedure is documented in `reproducibility/loss_switching.md`.
 
-This document intentionally records those source-level changes instead of introducing a new configuration mechanism that was not used in the reported experiments.
+This document records the source-level procedures actually used in the reported experiments instead of introducing a configuration mechanism that was not used during the original experiments.
 
----
 
 ## 23. Reproducibility checklist
 
@@ -1360,7 +1359,7 @@ To reproduce a reported experiment:
 1. Prepare the corresponding public dataset.
 2. Use the exact released train/validation/test split manifest.
 3. Select the corresponding released model YAML.
-4. Apply the documented source-level modification when reproducing Tables 4–6.
+4. Apply the documented source-level modification when reproducing Tables 4–6, and apply the documented GIoU/Inner-MPDIoU switching rule for Table 7 according to whether component `d` is enabled.
 5. Keep all remaining training arguments unchanged.
 6. Train independently with seeds `0`, `42`, and `3407` where repeated runs are reported.
 7. Use the validation subset for MSLA architecture selection and checkpoint selection.
