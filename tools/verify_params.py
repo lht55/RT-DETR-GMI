@@ -42,7 +42,7 @@ def load_aifi():
 
 def main():
     aifi = load_aifi()(c1=256, cm=1024, num_heads=8)
-    experimental = load_file(MSLA_ROOT / "experimental/MSLA.py", "_experimental_msla")
+    experimental = load_file(MSLA_ROOT / "ultralytics/nn/extra_modules/MSLA.py", "_experimental_msla")
     msla_aifi = experimental.TransformerEncoderLayer_MSLA(c1=256, cm=1024, num_heads=8)
 
     aifi_parameters = sum(p.numel() for p in aifi.parameters())
