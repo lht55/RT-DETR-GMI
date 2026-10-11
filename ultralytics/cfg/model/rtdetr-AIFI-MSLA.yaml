@@ -1,3 +1,6 @@
+# Released MSLA-only graph: encoder resolves to msla_reimplementation.py,
+# NOT the historical Table 7 experimental implementation (619,588 parameters).
+# See reproducibility/msla/configs/final_msla_aifi.yaml and its README.
 # Parameters
 nc: 80  # number of classes
 scales: # model compound scaling constants, i.e. 'model=yolov8n-cls.yaml' will call yolov8-cls.yaml with scale 'n'

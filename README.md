@@ -14,13 +14,17 @@ Original Ultralytics copyright and license notices are retained in the source fi
 
 This project uses the MSLA idea with reference to the MSLAU-Net paper (arXiv:2505.18823). The MSLA algorithmic concept is not claimed as original to this project.
 
-The MSLA code shipped here is an independent PyTorch implementation in `ultralytics/nn/extra_modules/msla_reimplementation.py`, written from the paper's public algorithm description, formulas, and structure diagrams. This repository does not copy or include the MSLAU-Net official GitHub source code.
+The MSLA code shipped here is an independent PyTorch implementation in `ultralytics/nn/extra_modules/msla_reimplementation.py`, written from the paper's public algorithm description, formulas, and structure diagrams. **It is not the experimental implementation used to generate the manuscript's tables.** Its separate branch attentions, AdaptiveScaleFusion, and BatchNorm differ from the historical shared-attention MSLA-AIFI.
+
+The manuscript experiments adapted Lan et al.'s MSLAU-Net implementation to the RT-DETR AIFI encoder, using [Monsoon49/MSLAU-Net](https://github.com/Monsoon49/MSLAU-Net) at commit `efdb058ebe363434376c8ef6cbf689391b60b7fc`, with historical upstream files `networks/msla.py` and `networks/linear_attention.py`. The upstream repository has no explicit software license identified for this dependency, so this repository does not redistribute its original source files. The original encoder is now available as the owner's external local archive; it remains outside this public release.
+
+The current `RT-DETR-GMI.yaml` and `rtdetr-AIFI-MSLA.yaml` resolve to the public reimplementation. They do not, by themselves, reproduce the paper's MSLA results or parameter counts. The external archived encoder has now been instantiated and measured: AIFI 789,760; historical MSLA-AIFI 619,588; reduction 170,172. See [the MSLA reproducibility record](reproducibility/msla/README.md) for archive loading, reconstructed Table 4/5 variants, confirmed implementation details, and the remaining full-experiment inputs.
 
 Please cite the MSLAU-Net paper when discussing or reusing the MSLA idea: https://arxiv.org/abs/2505.18823
 
 ## Project Layout
 
-* `RT-DETR-GMI.yaml`: final RT-DETR-GMI model configuration.
+* `RT-DETR-GMI.yaml`: released RT-DETR-GMI model graph using the public MSLA reimplementation; historical MSLA reproduction requires the external experimental encoder.
 * `train.py`: training entry point.
 * `val.py`: validation and metric reporting entry point.
 * `export.py`: model export entry point.
@@ -30,6 +34,7 @@ Please cite the MSLAU-Net paper when discussing or reusing the MSLA idea: https:
 * `ultralytics/cfg/model/REPRODUCIBILITY.md`: detailed experimental protocol, model-selection procedure, source-level ablation instructions, evaluation settings, and table-specific reproduction guide.
 * `reproducibility/splits/`: fixed train/validation/test split manifests used in the reported experiments.
 * `reproducibility/results/`: machine-readable per-seed metrics, per-class metrics, representative confusion matrices, and supporting numerical results.
+* `reproducibility/msla/`: historical MSLA experiment specifications and guarded verification interfaces; these are not complete training configurations.
 
 ## Installation
 
@@ -127,6 +132,8 @@ The Grad-CAM helper requires the `grad-cam` package.
 ## Reproducibility
 
 The repository provides reproducibility materials supporting the experiments reported in Tables 3–11 of the revised manuscript.
+
+For experiments involving MSLA, the released numerical records describe historical runs. The archived encoder and all seven branch/kernel configurations can now be loaded locally with the new tools; non-final variants are reconstructed from recorded source-edit rules. Complete detector training/metric reproduction still requires the historical model graphs and run settings; no training or metric evaluation was performed in this remediation. See [MSLA reproducibility status](reproducibility/msla/README.md).
 
 The detailed protocol is documented in:
 

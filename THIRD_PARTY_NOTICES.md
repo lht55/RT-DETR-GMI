@@ -20,7 +20,25 @@ headers intact.
 | Module | Current repository path | Notes |
 | --- | --- | --- |
 | GMI module registry / `C2f_MambaOut` wrapper | `ultralytics/nn/extra_modules/__init__.py`, `ultralytics/nn/extra_modules/gmi.py` | Local wrapper around the Apache-2.0 MambaOut block. Treat wrapper code as project code only if confirmed by the project owner. |
-| Independent MSLA encoder | `ultralytics/nn/extra_modules/msla_reimplementation.py` | Clean-room implementation written for this repository from the public MSLAU-Net paper's algorithm description, formulas, and structure diagrams (paper citation retained in README; arXiv:2505.18823). The final public repository does not include the MSLAU-Net GitHub source code or the previous implementation derived from that source. README citation is retained for the paper/algorithmic idea. |
+| Independent MSLA encoder | `ultralytics/nn/extra_modules/msla_reimplementation.py` | Clean-room implementation written for this repository from the public MSLAU-Net paper's algorithm description, formulas, and structure diagrams (paper citation retained in README; arXiv:2505.18823). It was not used to generate the paper's experimental results. Its independent branch attention, AdaptiveScaleFusion, and BatchNorm differ from the historical shared-attention implementation. The final public repository does not include the MSLAU-Net GitHub source files or the original RT-DETR encoder adaptation. |
+
+## Historical MSLA Experimental Dependency (Not Bundled)
+
+The manuscript's MSLA-AIFI experiments used the MSLA mechanism from Lan et al.'s
+[MSLAU-Net paper](https://arxiv.org/abs/2505.18823), with implementation from
+[Monsoon49/MSLAU-Net](https://github.com/Monsoon49/MSLAU-Net) pinned to commit
+`efdb058ebe363434376c8ef6cbf689391b60b7fc`, adapted to the RT-DETR encoder.
+The confirmed historical upstream files are `networks/msla.py` and
+`networks/linear_attention.py`. The owner's external archived `MSLA.py` now
+provides local experimental evidence and the RT-DETR adaptation. Public tools
+load it dynamically and apply recorded source edits in memory; they do not bundle
+its class definitions. Optional full-source output is rejected inside this repository.
+No explicit upstream software license has been identified; its original source
+files are not redistributed or assigned this repository's AGPL-3.0 license.
+The new `reproducibility/msla/` files contain modification rules, experiment
+specifications, and generation/verification tools, not a copy of that implementation. Existing
+historical snippets in `REPRODUCIBILITY.md` are retained with an explicit evidence
+and provenance caveat; their presence does not establish redistribution permission.
 
 Project owner must confirm that any project-specific portions are original or otherwise
 authorized for release under this repository's AGPL-3.0 licensing terms before staging.

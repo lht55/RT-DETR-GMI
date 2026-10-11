@@ -2,6 +2,23 @@
 
 This document records the experimental protocol, model-selection procedure, source-level ablation procedures, dataset splits, and released numerical results used to reproduce the experiments reported in Tables 3–11 of the revised manuscript.
 
+**MSLA implementation clarification:** the paper used the MSLAU-Net implementation
+at commit `efdb058ebe363434376c8ef6cbf689391b60b7fc`, adapted to RT-DETR's encoder.
+The current registry instead imports `msla_reimplementation.py`; this independent
+public version did not generate the paper's results. MSLA-containing model YAMLs
+are not sufficient for historical reproduction. See
+[the dedicated MSLA record](../../../reproducibility/msla/README.md) for experiment
+specifications, dependency boundaries, and verification status.
+
+The owner has now supplied an external local archive containing the five historical
+classes. Its encoder defaults, tensor reshapes, FFN, LayerNorm, dropout, and shared
+attention have been confirmed. Actual counts are AIFI 789,760 and historical
+MSLA-AIFI 619,588 (difference 170,172). The confirmed upstream files are
+`networks/msla.py` and `networks/linear_attention.py` at the above commit.
+`reproducibility/msla/tools/build_historical_variant.py` reconstructs recorded
+branch/kernel source edits from this archive in memory; it does not redistribute
+the full source or claim separate historical variant files are byte-identical.
+
 Some ablation experiments were implemented by directly modifying the corresponding source code rather than by introducing additional YAML hyperparameters. To avoid describing a configuration mechanism that was not used in the reported experiments, the source-level modifications required to reproduce these ablations are documented below.
 
 The repository also provides exact train/validation/test split manifests and machine-readable numerical results supporting the reported repeated-run statistics, per-class analyses, ablation studies, cross-model comparisons, second-dataset evaluation, and representative confusion matrices.
@@ -319,7 +336,7 @@ GCS Backbone
 + Inner-MPDIoU
 ```
 
-The corresponding released model configurations should be used instead of machine-specific local paths from the original experimental environment.
+The corresponding released model configurations should be used instead of machine-specific local paths from the original experimental environment. For MSLA-containing models, their current encoder binding remains the public reimplementation. The new tools load the external archived encoder for local verification and source-edit reconstruction; restoring complete training graphs still requires the historical graph/run settings and a deliberate local binding to that external implementation.
 
 ---
 
@@ -445,7 +462,7 @@ The evaluated variants are:
 
 The original implementation performed this experiment by modifying the `MSLA` source code directly.
 
-The following equivalent variants reconstruct the branch structures reported in Table 4.
+The following historical documentation snippets are retained for reference. The external archived final implementation now confirms the complete auxiliary classes and encoder, including direct BNC/BCHW reshape and the square-grid assumption; those behaviors are intentionally preserved. The current generator reconstructs the recorded branch-number source edits from that final archive rather than claiming these snippets or separate variants are byte-identical original files. Specifications are in `reproducibility/msla/ablations/`. No new upstream source has been copied; the redistribution status of the pre-existing snippets is still separate from the local evidence.
 
 ### 10.1 One branch
 
@@ -634,7 +651,7 @@ The evaluated kernel configurations are:
 (5, 7, 9, 11)
 ```
 
-For example, the selected final configuration is implemented as:
+The following retained historical snippet records the selected kernel configuration; it does not define a complete runnable MSLA encoder:
 
 ```python
 self.dw_conv_3x3 = DepthwiseConv(
