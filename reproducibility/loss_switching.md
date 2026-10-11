@@ -176,12 +176,7 @@ Active loss: GIoU
 Inner-MPDIoU: disabled
 ```
 
-For any Table 7 configuration that includes component `d`, including the `d`-only ablation and the final `a + b + c + d` configuration:
-
-```text
-Active loss: Inner-MPDIoU
-ratio = 0.7
-mpdiou_hw = 2
+For Table 7 configurations that do not include component `d`:
 
 ```text
 Active loss: GIoU
@@ -203,6 +198,7 @@ mpdiou_hw = 2
 ```
 
 For Table 6, the architecture and all other training settings remain unchanged, and only the active IoU-based loss line in `_get_loss_bbox()` is replaced by the corresponding loss listed above.
+
 
 ## Important reproducibility note
 
