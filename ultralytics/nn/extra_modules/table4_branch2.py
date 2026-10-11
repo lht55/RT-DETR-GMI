@@ -19,7 +19,7 @@ wrapper is retained from the supplied experimental source.
 Compatibility notes:
 * TransformerEncoderLayer_MSLA accepts BCHW feature maps.
 * The original MSLA token reshape assumes square feature maps (H == W).
-* c1 must be divisible by 4; c1 // 4 must be divisible by num_heads.
+* c1 must be divisible by 2; c1 // 2 must be divisible by num_heads.
 * The original forward always uses post-normalization. normalize_before,
   src_mask, src_key_padding_mask, and pos are retained for interface compatibility
   but are not used to change the computation.

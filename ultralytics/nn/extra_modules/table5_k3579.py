@@ -6,6 +6,8 @@
 
 # table5_k3579: 4 branch(es), kernels=(3, 5, 7, 9).
 # Final MSLA configuration used in the paper; unchanged experimental implementation.
+# Provenance: archived final experimental implementation with the selected
+# (3, 5, 7, 9) kernels; the kernel-configuration modification rule leaves it unchanged.
 
 """Experimental MSLA encoder extracted from the supplied training source.
 

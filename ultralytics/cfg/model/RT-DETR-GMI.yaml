@@ -1,8 +1,8 @@
 
-# Released model graph: TransformerEncoderLayer_MSLA uses the experimental implementation in ultralytics/nn/extra_modules/MSLA.py.
-# NOT the encoder that generated the paper's results.
-# Historical final MSLA: 4 branches, kernels (3,5,7,9), shared LinearAttention,
-# learnable scalar branch weights. See reproducibility/msla/README.md.
+# Experimental model graph: TransformerEncoderLayer_MSLA resolves to
+# ultralytics/nn/extra_modules/MSLA.py, the implementation used for the paper.
+# Final MSLA: 4 branches, kernels (3,5,7,9), shared LinearAttention,
+# learnable scalar branch weights. See ultralytics/nn/extra_modules/README.md.
 # Parameters
 nc: 8  # number of classes
 scales: # model compound scaling constants, i.e. 'model=yolov8n-cls.yaml' will call yolov8-cls.yaml with scale 'n'

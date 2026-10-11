@@ -6,8 +6,8 @@ registering unrelated experimental/vendored modules in the minimal public releas
 """
 
 from .gmi import C2f_MambaOut, MFM
-# Public independent encoder; NOT the historical manuscript implementation.
-# See reproducibility/msla/README.md before reproducing Tables 4, 5, or 7.
+# Experimental encoder used for the manuscript results, provided in MSLA.py.
+# See ultralytics/nn/extra_modules/README.md for Tables 4, 5, and 7.
 from .MSLA import TransformerEncoderLayer_MSLA
 
 # ``parse_model`` contains an upstream-compatible optional branch for an ``Index``

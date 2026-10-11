@@ -14,17 +14,17 @@ Original Ultralytics copyright and license notices are retained in the source fi
 
 This project uses the MSLA idea with reference to the MSLAU-Net paper (arXiv:2505.18823). The MSLA algorithmic concept is not claimed as original to this project.
 
-The MSLA code shipped here is an independent PyTorch implementation in `ultralytics/nn/extra_modules/msla_reimplementation.py`, written from the paper's public algorithm description, formulas, and structure diagrams. **It is not the experimental implementation used to generate the manuscript's tables.** Its separate branch attentions, AdaptiveScaleFusion, and BatchNorm differ from the historical shared-attention MSLA-AIFI.
+The implementation used to generate the manuscript's MSLA results is provided in `ultralytics/nn/extra_modules/MSLA.py`. It was extracted from the experimental training source, preserving the MSLA-AIFI parameter definitions and forward computation. The final configuration uses four depthwise-convolution branches with kernels `(3, 5, 7, 9)`, shared `LinearAttention`, and learnable branch scale weights.
 
-The manuscript experiments adapted Lan et al.'s MSLAU-Net implementation to the RT-DETR AIFI encoder, using [Monsoon49/MSLAU-Net](https://github.com/Monsoon49/MSLAU-Net) at commit `efdb058ebe363434376c8ef6cbf689391b60b7fc`, with historical upstream files `networks/msla.py` and `networks/linear_attention.py`. The upstream repository has no explicit software license identified for this dependency, so this repository does not redistribute its original source files. The original encoder is now available as the owner's external local archive; it remains outside this public release.
+The manuscript experiments adapted Lan et al.'s MSLAU-Net implementation to the RT-DETR AIFI encoder, using [Monsoon49/MSLAU-Net](https://github.com/Monsoon49/MSLAU-Net) at commit `efdb058ebe363434376c8ef6cbf689391b60b7fc`, with upstream files `networks/msla.py` and `networks/linear_attention.py`. The experimental RT-DETR encoder adaptation is now included in this repository as `MSLA.py`; see `THIRD_PARTY_NOTICES.md` for provenance and licensing notes.
 
-The current `RT-DETR-GMI.yaml` and `rtdetr-AIFI-MSLA.yaml` resolve to the public reimplementation. They do not, by themselves, reproduce the paper's MSLA results or parameter counts. The external archived encoder has now been instantiated and measured: AIFI 789,760; historical MSLA-AIFI 619,588; reduction 170,172. See [the MSLA reproducibility record](reproducibility/msla/README.md) for archive loading, reconstructed Table 4/5 variants, confirmed implementation details, and the remaining full-experiment inputs.
+The current `ultralytics/cfg/model/RT-DETR-GMI.yaml` and `ultralytics/cfg/model/rtdetr-AIFI-MSLA.yaml` resolve to this experimental implementation. For `c1=256`, `cm=1024`, and `num_heads=8`, AIFI has 789,760 parameters and MSLA-AIFI has 619,588, a reduction of 170,172. See [the MSLA reproducibility guide](ultralytics/nn/extra_modules/README.md) for the Table 4/5 source variants and parameter consistency.
 
 Please cite the MSLAU-Net paper when discussing or reusing the MSLA idea: https://arxiv.org/abs/2505.18823
 
 ## Project Layout
 
-* `RT-DETR-GMI.yaml`: released RT-DETR-GMI model graph using the public MSLA reimplementation; historical MSLA reproduction requires the external experimental encoder.
+* `ultralytics/cfg/model/RT-DETR-GMI.yaml`: RT-DETR-GMI model graph using the experimental encoder in `ultralytics/nn/extra_modules/MSLA.py`.
 * `train.py`: training entry point.
 * `val.py`: validation and metric reporting entry point.
 * `export.py`: model export entry point.
@@ -34,7 +34,7 @@ Please cite the MSLAU-Net paper when discussing or reusing the MSLA idea: https:
 * `ultralytics/cfg/model/REPRODUCIBILITY.md`: detailed experimental protocol, model-selection procedure, source-level ablation instructions, evaluation settings, and table-specific reproduction guide.
 * `reproducibility/splits/`: fixed train/validation/test split manifests used in the reported experiments.
 * `reproducibility/results/`: machine-readable per-seed metrics, per-class metrics, representative confusion matrices, and supporting numerical results.
-* `reproducibility/msla/`: historical MSLA experiment specifications and guarded verification interfaces; these are not complete training configurations.
+* `ultralytics/nn/extra_modules/README.md`: MSLA implementation provenance, Table 4/5 source variants, and parameter consistency.
 
 ## Installation
 
@@ -133,7 +133,7 @@ The Grad-CAM helper requires the `grad-cam` package.
 
 The repository provides reproducibility materials supporting the experiments reported in Tables 3–11 of the revised manuscript.
 
-For experiments involving MSLA, the released numerical records describe historical runs. The archived encoder and all seven branch/kernel configurations can now be loaded locally with the new tools; non-final variants are reconstructed from recorded source-edit rules. Complete detector training/metric reproduction still requires the historical model graphs and run settings; no training or metric evaluation was performed in this remediation. See [MSLA reproducibility status](reproducibility/msla/README.md).
+For experiments involving MSLA, the released numerical records describe the reported experimental runs. The experimental encoder is provided in `ultralytics/nn/extra_modules/MSLA.py`, alongside the Table 4/5 branch and kernel variants. These ablations keep the detector YAML unchanged and replace only the encoder source implementation. Complete training and metric reproduction also requires the documented dataset splits, run settings, and evaluation protocol. See [the MSLA reproducibility guide](ultralytics/nn/extra_modules/README.md).
 
 The detailed protocol is documented in:
 

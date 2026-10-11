@@ -4,20 +4,19 @@ This document records the experimental protocol, model-selection procedure, sour
 
 **MSLA implementation clarification:** the paper used the MSLAU-Net implementation
 at commit `efdb058ebe363434376c8ef6cbf689391b60b7fc`, adapted to RT-DETR's encoder.
-The current registry instead imports `msla_reimplementation.py`; this independent
-public version did not generate the paper's results. MSLA-containing model YAMLs
-are not sufficient for historical reproduction. See
-[the dedicated MSLA record](../../../reproducibility/msla/README.md) for experiment
-specifications, dependency boundaries, and verification status.
+The current registry imports `ultralytics/nn/extra_modules/MSLA.py`, the
+experimental implementation used for the manuscript results. The confirmed
+upstream files are `networks/msla.py` and `networks/linear_attention.py` at the
+above commit. See [the MSLA reproducibility guide](../../nn/extra_modules/README.md)
+for provenance, Table 4/5 source variants, and parameter consistency.
 
-The owner has now supplied an external local archive containing the five historical
-classes. Its encoder defaults, tensor reshapes, FFN, LayerNorm, dropout, and shared
-attention have been confirmed. Actual counts are AIFI 789,760 and historical
-MSLA-AIFI 619,588 (difference 170,172). The confirmed upstream files are
-`networks/msla.py` and `networks/linear_attention.py` at the above commit.
-`reproducibility/msla/tools/build_historical_variant.py` reconstructs recorded
-branch/kernel source edits from this archive in memory; it does not redistribute
-the full source or claim separate historical variant files are byte-identical.
+The bundled experimental encoder preserves the tensor reshapes, FFN, LayerNorm,
+dropout, and shared attention from the supplied training source. For `c1=256`,
+`cm=1024`, and `num_heads=8`, the encoder counts are AIFI 789,760 and MSLA-AIFI
+619,588 (difference 170,172). Table 4/5 variants are provided alongside `MSLA.py`;
+these ablations replace only the encoder source while keeping the detector YAML
+unchanged. Complete training and metric reproduction also requires the dataset
+splits, run settings, and evaluation protocol documented below.
 
 Some ablation experiments were implemented by directly modifying the corresponding source code rather than by introducing additional YAML hyperparameters. To avoid describing a configuration mechanism that was not used in the reported experiments, the source-level modifications required to reproduce these ablations are documented below.
 
@@ -336,7 +335,7 @@ GCS Backbone
 + Inner-MPDIoU
 ```
 
-The corresponding released model configurations should be used instead of machine-specific local paths from the original experimental environment. For MSLA-containing models, their current encoder binding remains the public reimplementation. The new tools load the external archived encoder for local verification and source-edit reconstruction; restoring complete training graphs still requires the historical graph/run settings and a deliberate local binding to that external implementation.
+The corresponding released model configurations should be used instead of machine-specific local paths from the original experimental environment. MSLA-containing models bind to the experimental encoder in `ultralytics/nn/extra_modules/MSLA.py`. For Tables 4 and 5, keep the detector YAML unchanged and replace only the encoder source with the corresponding bundled branch or kernel variant; use the documented run settings and evaluation protocol.
 
 ---
 
@@ -462,7 +461,7 @@ The evaluated variants are:
 
 The original implementation performed this experiment by modifying the `MSLA` source code directly.
 
-The following historical documentation snippets are retained for reference. The external archived final implementation now confirms the complete auxiliary classes and encoder, including direct BNC/BCHW reshape and the square-grid assumption; those behaviors are intentionally preserved. The current generator reconstructs the recorded branch-number source edits from that final archive rather than claiming these snippets or separate variants are byte-identical original files. Specifications are in `reproducibility/msla/ablations/`. No new upstream source has been copied; the redistribution status of the pre-existing snippets is still separate from the local evidence.
+The following historical documentation snippets are retained for reference. Complete source implementations are provided in `ultralytics/nn/extra_modules/table4_branch1.py`, `table4_branch2.py`, and `table5_k3333.py` for the one-, two-, and four-branch variants, respectively. The bundled experimental encoder preserves direct BNC/BCHW reshape and the square-grid assumption. Variant provenance is documented in the source headers and [the MSLA reproducibility guide](../../nn/extra_modules/README.md); see `THIRD_PARTY_NOTICES.md` for licensing notes.
 
 ### 10.1 One branch
 
@@ -651,7 +650,7 @@ The evaluated kernel configurations are:
 (5, 7, 9, 11)
 ```
 
-The following retained historical snippet records the selected kernel configuration; it does not define a complete runnable MSLA encoder:
+The following retained historical snippet illustrates the selected kernel configuration. Complete implementations are provided in `ultralytics/nn/extra_modules/table5_k3333.py`, `table5_k1357.py`, `table5_k3579.py`, and `table5_k57911.py`; the final `(3, 5, 7, 9)` implementation is also provided in `MSLA.py`:
 
 ```python
 self.dw_conv_3x3 = DepthwiseConv(

@@ -1,6 +1,6 @@
-# Released MSLA-only graph: TransformerEncoderLayer_MSLA uses the experimental implementation in ultralytics/nn/extra_modules/MSLA.py.
-# NOT the historical Table 7 experimental implementation (619,588 parameters).
-# See reproducibility/msla/configs/final_msla_aifi.yaml and its README.
+# Experimental MSLA-only graph: encoder resolves to
+# ultralytics/nn/extra_modules/MSLA.py (619,588 encoder parameters for
+# c1=256, cm=1024, num_heads=8). See ultralytics/nn/extra_modules/README.md.
 # Parameters
 nc: 80  # number of classes
 scales: # model compound scaling constants, i.e. 'model=yolov8n-cls.yaml' will call yolov8-cls.yaml with scale 'n'

@@ -721,8 +721,8 @@ def parse_model(d, ch, verbose=True, warehouse_manager=None):  # model_dict, inp
         Classify, Conv, ConvTranspose, GhostConv, Bottleneck, GhostBottleneck, SPP, SPPF, DWConv, DSConv, Focus,
         BottleneckCSP, C1, C2, C2f, C3, C3TR, C3Ghost, nn.Conv2d, nn.ConvTranspose2d, DWConvTranspose2d, C3x, RepC3,
         ConvNormLayer, C2f_MambaOut)
-    # TransformerEncoderLayer_MSLA is the public reimplementation, not the
-    # historical paper encoder. MSLA experiment manifests are not model YAMLs.
+    # TransformerEncoderLayer_MSLA uses the experimental encoder in
+    # ultralytics/nn/extra_modules/MSLA.py; Table 4/5 variants replace its source.
     transformer_modules = (AIFI, TransformerEncoderLayer_MSLA)
 
     for i, (f, n, m, args) in enumerate(d['backbone'] + d['head']):  # from, number, module, args

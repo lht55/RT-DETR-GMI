@@ -6,7 +6,7 @@
 
 # table5_k3333: 4 branch(es), kernels=(3, 3, 3, 3).
 # Provenance: reconstructed from the archived final experimental implementation
-# and the recorded branch-number modification rule.
+# and the recorded kernel-configuration modification rule.
 
 """Experimental MSLA encoder extracted from the supplied training source.
 
