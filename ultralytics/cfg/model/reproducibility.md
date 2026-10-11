@@ -936,38 +936,6 @@ reproducibility/results/per_seed_metrics.csv
 
 ## 14. Table 8 — Performance comparison of different detectors on PVEL-AD
 
-Table 8 compares RT-DETR-GMI with the general-purpose detector baselines reported in the manuscript.
-
-For the RT-DETR family, the repository provides:
-
-```text
-rtdetr-r18.yaml
-rtdetr-r34.yaml
-rtdetr-r50.yaml
-```
-
-All compared models were evaluated using the same PVEL-AD dataset split and the standardized evaluation protocol used in the manuscript.
-
-The quantitative comparison is based on **three independent runs**.
-
-The repeated-run protocol uses:
-
-```text
-seed = 0
-seed = 42
-seed = 3407
-```
-
-Precision, Recall, mAP50, mAP50:95, and FPS are reported as:
-
-```text
-mean ± SD
-```
-
-over the three runs.
-
-Params and GFLOPs are fixed model-level values.
-
 The external YOLO and D-FINE baselines were trained using their corresponding framework-specific implementations and configurations used in the experiments.
 
 Because these models originate from different repositories and software versions, their configuration formats, training entry points, initialization settings, and evaluation commands are not identical.
@@ -977,26 +945,24 @@ Detailed reproduction information for these external baselines, including reposi
 ```text
 reproducibility/external_baselines.md
 ```
+
 The controlled experimental conditions shared across the detector comparison were:
+
+```text
 same PVEL-AD train/validation/test split
 input resolution = 640 × 640
 three independent runs with seeds 0, 42, and 3407
 evaluation on the fixed test subset
 standardized FPS reporting
+```
 
 The complete retained run-level numerical records underlying Table 8 are provided in:
-reproducibility/results/per_seed_metrics.csv
-
-The Table 8 comparison is descriptive. Differences between the reported means are not interpreted as establishing statistical superiority across all compared detector families.
-
-Because these models originate from different repositories and software versions, their configuration formats, training entry points, initialization settings, and evaluation commands are not identical.
-
-Detailed reproduction information for these external baselines, including repository/version information, model configurations, initialization procedures, training hyperparameters, framework-specific training commands, and test-set evaluation commands, is provided in:
 
 ```text
-reproducibility/external_baselines.md
+reproducibility/results/per_seed_metrics.csv
+```
 
----
+The Table 8 comparison is descriptive. Differences between the reported means are not interpreted as establishing statistical superiority across all compared detector families.
 
 ## 15. Table 9 — Per-class Precision, Recall, and AP50 comparison
 
