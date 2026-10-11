@@ -1,6 +1,6 @@
 
-# Released model graph: TransformerEncoderLayer_MSLA resolves to the independent
-# msla_reimplementation.py, NOT the encoder that generated the paper's results.
+# Released model graph: TransformerEncoderLayer_MSLA uses the experimental implementation in ultralytics/nn/extra_modules/MSLA.py.
+# NOT the encoder that generated the paper's results.
 # Historical final MSLA: 4 branches, kernels (3,5,7,9), shared LinearAttention,
 # learnable scalar branch weights. See reproducibility/msla/README.md.
 # Parameters
