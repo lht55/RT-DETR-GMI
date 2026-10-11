@@ -62,7 +62,7 @@ The common RT-DETR training settings are:
 | Momentum | 0.9 |
 | Weight decay | 0.0001 |
 | Deterministic training | True |
-| Pretrained initialization | True |
+| External pretrained checkpoint | None |
 | AMP | False |
 | Cache | False |
 | Workers | 4 |
@@ -71,6 +71,7 @@ The common RT-DETR training settings are:
 | Training-time validation split | `val` |
 | Validation IoU | 0.7 |
 | Maximum detections | 300 |
+
 
 The repeated experiments use:
 
@@ -87,7 +88,7 @@ epochs: 300
 patience: 40
 batch: 16
 imgsz: 640
-pretrained: true
+pretrained: true  # archived framework argument; no external .pt checkpoint was explicitly loaded
 optimizer: AdamW
 seed: 0
 deterministic: true
@@ -104,7 +105,9 @@ lrf: 1.0
 momentum: 0.9
 weight_decay: 0.0001
 ```
+### Initialization
 
+All RT-DETR models were instantiated from their released YAML architecture configurations. No external detector checkpoint or pretrained `.pt` weights were explicitly loaded before training. The `pretrained=True` value appearing in the archived Ultralytics argument records is retained only as a record of the framework argument used at runtime; it does not identify an additional checkpoint loaded for these experiments.
 For the seed-42 and seed-3407 runs, only the random seed is changed unless otherwise specified.
 
 ---
@@ -965,33 +968,33 @@ over the three runs.
 
 Params and GFLOPs are fixed model-level values.
 
-The external YOLO and D-FINE baselines were trained using their corresponding official implementations available at the time of the experiments.
+The external YOLO and D-FINE baselines were trained using their corresponding framework-specific implementations and configurations used in the experiments.
 
-Because these models originate from different repositories and software versions, their configuration formats, command-line interfaces, training entry points, and software defaults are not identical.
+Because these models originate from different repositories and software versions, their configuration formats, training entry points, initialization settings, and evaluation commands are not identical.
 
-A single artificial unified training command would therefore not accurately represent the actual external implementations used in the experiments.
-
-For this reason, the repository documents the common controlled experimental conditions:
+Detailed reproduction information for these external baselines, including repository/version information, model configurations, initialization procedures, training hyperparameters, framework-specific training commands, and test-set evaluation commands, is provided in:
 
 ```text
-same PVEL-AD dataset split
-input resolution = 640 × 640
-three independent runs
-standardized test-set evaluation
-standardized FPS reporting
+reproducibility/external_baselines.md
 ```
-
-rather than retrospectively rewriting all external implementations into one command format.
-
-Where an external baseline is reproduced independently, researchers should use the corresponding official implementation and model configuration associated with that model rather than assuming that the latest software defaults are identical to those used in this study.
+The controlled experimental conditions shared across the detector comparison were:
+same PVEL-AD train/validation/test split
+input resolution = 640 × 640
+three independent runs with seeds 0, 42, and 3407
+evaluation on the fixed test subset
+standardized FPS reporting
 
 The complete retained run-level numerical records underlying Table 8 are provided in:
-
-```text
 reproducibility/results/per_seed_metrics.csv
-```
 
 The Table 8 comparison is descriptive. Differences between the reported means are not interpreted as establishing statistical superiority across all compared detector families.
+
+Because these models originate from different repositories and software versions, their configuration formats, training entry points, initialization settings, and evaluation commands are not identical.
+
+Detailed reproduction information for these external baselines, including repository/version information, model configurations, initialization procedures, training hyperparameters, framework-specific training commands, and test-set evaluation commands, is provided in:
+
+```text
+reproducibility/external_baselines.md
 
 ---
 
@@ -1211,7 +1214,6 @@ yolo detect train \
   warmup_bias_lr=0.1 \
   seed=0 \
   deterministic=True \
-  pretrained=True \
   amp=False \
   cache=False \
   workers=4 \
@@ -1231,7 +1233,7 @@ yolo detect train \
   mixup=0.0 \
   copy_paste=0.0
 ```
-
+No external pretrained checkpoint is required for this reproduction command. The models are instantiated from the released YAML architecture configurations.
 For repeated experiments, rerun the same configuration with:
 
 ```text
@@ -1301,7 +1303,7 @@ save_period: -1
 cache: false
 workers: 4
 
-pretrained: true
+pretrained: true  # archived framework argument; no external checkpoint was explicitly loaded
 optimizer: AdamW
 
 seed: 0
