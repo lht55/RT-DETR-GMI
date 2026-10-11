@@ -176,7 +176,12 @@ Active loss: GIoU
 Inner-MPDIoU: disabled
 ```
 
-For the component ablations in Table 7 that do not include component `d`:
+For any Table 7 configuration that includes component `d`, including the `d`-only ablation and the final `a + b + c + d` configuration:
+
+```text
+Active loss: Inner-MPDIoU
+ratio = 0.7
+mpdiou_hw = 2
 
 ```text
 Active loss: GIoU
