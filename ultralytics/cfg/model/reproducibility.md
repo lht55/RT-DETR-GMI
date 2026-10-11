@@ -719,7 +719,7 @@ reproducibility/results/per_seed_metrics.csv
 ---
 
 ## 12. Table 6 — Comparison of loss functions
-
+Detailed source-level loss switching instructions are provided in [reproducibility/loss_switching.md](../../../reproducibility/loss_switching.md).
 Table 6 compares different IoU-based bounding-box regression losses under the fixed architecture:
 
 ```text
