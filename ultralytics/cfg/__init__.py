@@ -406,7 +406,7 @@ def entrypoint(debug=''):
         LOGGER.warning(f"WARNING ⚠️ 'model' is missing. Using default 'model={model}'.")
     overrides['model'] = model
     normalized_model = str(model).lower().replace('-', '').replace('_', '')
-    if 'rtdetr' in model.lower():  # guess architecture
+    if 'rtdetr' in normalized_model: # guess architecture
         from ultralytics import RTDETR
         model = RTDETR(model)  # no task argument
     elif 'fastsam' in model.lower():
