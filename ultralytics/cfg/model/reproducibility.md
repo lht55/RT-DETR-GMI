@@ -302,8 +302,7 @@ For all manuscript tables reporting F1, Precision and Recall are first averaged 
 The released class_avg_f1_pct is a separate quantity obtained by averaging the per-class F1 values within each run. The manuscript_f1_pct column corresponds to the F1 convention used in the manuscript.
 
 python reproducibility/scripts/regenerate_manuscript_tables.py
-The script recalculates the run-level manuscript F1 values from Precision and Recall and regenerates the Mean ± SD values for Tables 6 and 11, while retaining the class-averaged F1 values for auditing.
-
+The script regenerates Tables 3–11 from the released machine-readable results and additionally produces an F1 aggregation audit that distinguishes the manuscript F1 from the class-averaged F1.
 Params and GFLOPs are deterministic model-level quantities and are therefore reported as single values rather than mean ± SD.
 
 ---
