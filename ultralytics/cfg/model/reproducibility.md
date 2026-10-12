@@ -298,13 +298,11 @@ mean ± standard deviation
 
 using the three independently trained runs.
 
-For the MSLA validation experiments, F1-score is calculated separately for each run from that run's Precision and Recall:
+For all manuscript tables reporting F1, Precision and Recall are first averaged across classes within each run. The manuscript F1 is then calculated for that run as F1 = 2PR/(P+R). The reported mean ± SD is calculated across the three run-level F1 values.  
+The released class_avg_f1_pct is a separate quantity obtained by averaging the per-class F1 values within each run. The manuscript_f1_pct column corresponds to the F1 convention used in the manuscript.
 
-```text
-F1 = 2 × Precision × Recall / (Precision + Recall)
-```
-
-The mean and sample standard deviation are then calculated across the three run-level F1 values.
+python reproducibility/scripts/regenerate_manuscript_tables.py
+The script recalculates the run-level manuscript F1 values from Precision and Recall and regenerates the Mean ± SD values for Tables 6 and 11, while retaining the class-averaged F1 values for auditing.
 
 Params and GFLOPs are deterministic model-level quantities and are therefore reported as single values rather than mean ± SD.
 
