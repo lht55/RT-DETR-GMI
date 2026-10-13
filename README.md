@@ -312,32 +312,66 @@ ultralytics/cfg/model/reproducibility.md
 
 ## Machine-Readable Results
 
-The repository provides machine-readable numerical results supporting the repeated-run statistics, ablation studies, detector comparisons, per-class analyses, second-dataset evaluation, and representative confusion matrices reported in the revised manuscript.
+Numerical results and the representative seed-0 confusion matrices are provided under [reproducibility/results/](reproducibility/results/).
 
-The principal files are:
+| File | Contents |
+| --- | --- |
+| [per_seed_metrics.csv](reproducibility/results/per_seed_metrics.csv) | Run-level results supporting Tables 3–11, with two explicitly named F1 metrics. |
+| [ablation_per_seed_metrics.csv](reproducibility/results/ablation_per_seed_metrics.csv) | The 24 test runs for the eight Table 7 component configurations, including AP75 and both F1 metrics. |
+| [per_class_metrics.csv](reproducibility/results/per_class_metrics.csv) | Class results and summaries; the component ablations include 192 individual measurements: 8 configurations × 3 seeds × 8 classes. |
+| [confusion_matrix_rtdetr_r18_seed0.csv](reproducibility/results/confusion_matrix_rtdetr_r18_seed0.csv) | Rounded, normalized RT-DETR-r18 matrix for Fig. 7. |
+| [confusion_matrix_rtdetr_gmi_seed0.csv](reproducibility/results/confusion_matrix_rtdetr_gmi_seed0.csv) | Rounded, normalized RT-DETR-GMI matrix for Fig. 7. |
+| [confusion_matrix_rtdetr_r18_seed0_counts.csv](reproducibility/results/confusion_matrix_rtdetr_r18_seed0_counts.csv) | Integer counts transcribed from the corresponding unnormalized matrix image. |
+| [confusion_matrix_rtdetr_gmi_seed0_counts.csv](reproducibility/results/confusion_matrix_rtdetr_gmi_seed0_counts.csv) | Integer counts transcribed from the corresponding unnormalized matrix image. |
+| [class_support.csv](reproducibility/results/class_support.csv) | Ground-truth box counts for the eight PVEL-AD test classes; total support is 1,398. |
+| [evaluation_settings.csv](reproducibility/results/evaluation_settings.csv) | The seed-0 evaluation settings, matrix axes, normalization rule, and archived background-counting behavior. |
 
-```text
-reproducibility/results/per_seed_metrics.csv
-reproducibility/results/per_class_metrics.csv
-reproducibility/results/confusion_matrix_rtdetr_r18_seed0.csv
-reproducibility/results/confusion_matrix_rtdetr_gmi_seed0.csv
+### F1 aggregation across classes and runs
+
+For each independent run, Precision and Recall are first averaged across classes. The released fields distinguish:
+
+- `class_avg_f1_pct`: the mean of the evaluator's per-class F1 values within that run.
+- `manuscript_f1_pct`: the harmonic mean of that run's class-averaged Precision and Recall, `2PR / (P + R)`.
+
+Each metric is calculated within a run before its mean and sample standard deviation are calculated across seeds `0`, `42`, and `3407`. The sample SD uses `n − 1` in the denominator. All manuscript F1 entries use `manuscript_f1_pct`. In `per_class_metrics.csv`, `f1_score_pct` refers to one individual class.
+
+Detection metrics use a percentage scale (0–100); their SDs use percentage points. FPS is reported as integer Mean ± sample SD. Params and GFLOPs are reported as fixed model-level quantities.
+
+### Representative confusion matrices
+
+Rows indicate predicted classes and columns indicate true classes. Each column is normalized by its column sum plus `1e-9`, and the released normalized values are rounded to two decimal places on a 0–1 scale.
+
+The archived settings are:
+
+| Setting | Value |
+| --- | ---: |
+| Validation candidate confidence | 0.001 |
+| Postprocessing IoU | 0.7 |
+| Maximum detections per image | 300 |
+| Confusion-matrix confidence | 0.25 |
+| Confusion-matrix matching IoU | 0.45 |
+
+Both confusion-matrix filters use strict `>` comparisons. The matrices represent the fixed-seed (`seed=0`) RT-DETR-r18 and RT-DETR-GMI models. The background row records unmatched ground-truth boxes. The background column records unmatched predictions counted by the archived implementation; it is a detection bookkeeping column. Class support counts real ground-truth boxes and includes the background-row false negatives for each defect class.
+
+The integer matrices preserve the original Ultralytics `8.0.201` output. `evaluation_settings.csv` records its background-counting conditions. Figure annotations below `0.005` are suppressed by the original plotting code.
+
+### Regenerate the manuscript tables
+
+Python 3.9 or later is sufficient; both scripts use only the standard library. From the repository root, run:
+
+```bash
+python reproducibility/scripts/regenerate_manuscript_tables.py
 ```
 
-Repeated-run detection metrics are reported as:
+This generates Tables 3–11 and `f1_aggregation_audit.csv` under `reproducibility/results/regenerated_tables/`. Tables 9 and 10 are recalculated from the individual seed-level class measurements. Table 10 subtracts adjacent AP50 means after each mean has been rounded to two decimals, matching the manuscript convention.
 
-```text
-mean ± standard deviation
+To recompute all eight component configurations, per-class means, sample SDs and variances, and verify the 64 stored class summaries, run:
+
+```bash
+python reproducibility/scripts/recompute_ablation_statistics.py --check-stored-summary
 ```
 
-using independent runs with:
-
-```text
-seed = 0
-seed = 42
-seed = 3407
-```
-
-Params and GFLOPs are deterministic model-level quantities and are therefore reported as single values rather than mean ± standard deviation.
+Outputs are written under `reproducibility/results/recomputed_ablation/`. Both scripts locate their default inputs relative to their own paths. Optional `--per-seed`, `--per-class`, and `--output-dir` arguments allow custom input and output locations.
 
 ## External Baseline Reproduction
 
@@ -642,3 +676,4 @@ third_party_licenses/
 ```
 
 Researchers reusing individual third-party components should review the corresponding upstream licenses and attribution requirements.
+
