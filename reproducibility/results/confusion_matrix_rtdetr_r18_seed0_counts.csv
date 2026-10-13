@@ -1,0 +1,10 @@
+﻿predicted\true,black_core,crack,finger,horizontal_dislocation,short_circuit,star_crack,thick_line,vertical_dislocation,background
+black_core,149,0,0,0,1,0,0,0,10
+crack,0,102,0,0,0,6,0,0,70
+finger,1,0,442,0,0,0,5,0,52
+horizontal_dislocation,0,0,0,144,0,0,0,0,12
+short_circuit,12,0,0,0,88,0,0,0,0
+star_crack,0,1,0,0,0,17,0,0,7
+thick_line,1,0,0,0,0,0,95,0,16
+vertical_dislocation,0,0,0,0,0,0,0,24,8
+background,22,121,89,0,0,1,76,1,0

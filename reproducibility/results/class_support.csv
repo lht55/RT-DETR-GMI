@@ -1,0 +1,9 @@
+﻿dataset,split,class_id,class_name,support,unit
+PVEL-AD,test,0,black_core,185,ground_truth_boxes
+PVEL-AD,test,1,crack,224,ground_truth_boxes
+PVEL-AD,test,2,finger,531,ground_truth_boxes
+PVEL-AD,test,3,horizontal_dislocation,144,ground_truth_boxes
+PVEL-AD,test,4,short_circuit,89,ground_truth_boxes
+PVEL-AD,test,5,star_crack,24,ground_truth_boxes
+PVEL-AD,test,6,thick_line,176,ground_truth_boxes
+PVEL-AD,test,7,vertical_dislocation,25,ground_truth_boxes
