@@ -48,7 +48,7 @@ Unless otherwise stated, the remaining training settings were kept unchanged acr
 
 ## 2. Common training protocol
 
-The common RT-DETR training settings are:
+The table below records the principal PVEL-AD training settings. The six PV-Multi-Defect runs used `cache: true` rather than the `cache: false` setting shown here; this dataset-specific setting is documented in Section 17.
 
 | Setting | Value |
 | --- | ---: |
@@ -125,7 +125,9 @@ warmup_momentum: 0.8
 warmup_bias_lr: 0.1
 ```
 
-The warm-up duration is 3.0 epochs, with:
+In the archived trainer implementation (`ultralytics/engine/trainer.py`), `nw` is assigned directly from `self.args.warmup_epochs`, without conversion from epochs to iterations. The warm-up condition is `ni <= nw`, where `ni` is the global batch-iteration index. Therefore, with `warmup_epochs: 3.0`, the warm-up block executes at indices 0, 1, 2, and 3 for training started from epoch 0. The argument retains its original name, but its value is used as an iteration-index limit rather than a duration of three epochs.
+
+The remaining warm-up settings are:
 
 ```text
 warmup_momentum = 0.8
@@ -1058,6 +1060,8 @@ seed = 3407
 
 using the same principal optimization protocol as the PVEL-AD experiments.
 
+All six released PV-Multi-Defect run configurations under [`reproducibility/results_pv/`](../../../reproducibility/results_pv/) record `cache: true`. Image caching was therefore enabled for these runs; the `cache: false` entry in Section 2 applies to the principal PVEL-AD configuration. The PV-Multi-Defect runs also record `warmup_epochs: 3.0`, which follows the iteration-index implementation described in Section 3.
+
 The exact dataset membership is provided by:
 
 ```text
@@ -1377,4 +1381,5 @@ and the numerical results underlying the manuscript summaries are available unde
 ```text
 reproducibility/results/
 ```
+
 
