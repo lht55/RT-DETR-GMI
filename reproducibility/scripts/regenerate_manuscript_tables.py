@@ -34,6 +34,15 @@ The released `class_avg_f1_pct` is a distinct metric: it is the mean of
 the per-class F1 values within a run. It is retained only for auditing and
 must not be substituted for the manuscript F1.
 
+Statistical inference for Table 3
+--------------------------------
+The mAP50 and mAP50:95 comparisons form a family of two exploratory paired
+two-sided t-tests. Report both unadjusted and Holm-adjusted p-values.
+Holm correction uses the full-precision p-values before display rounding.
+The 95% confidence intervals remain unadjusted.
+With three paired runs, inference is sensitive to the normality assumption
+for paired differences and is interpreted alongside descriptive results.
+
 Standard deviation
 ------------------
 Sample standard deviation (n - 1) is used across independent runs.
@@ -296,6 +305,22 @@ def standard_table_row(label: str, summary: Dict[str, object]) -> Dict[str, obje
     }
 
 
+def holm_adjusted_pvalues(p_values: Sequence[float]) -> List[float]:
+    """Return Holm-adjusted p-values in the original metric order.
+
+    Apply the step-down multipliers to the full-precision values, enforce
+    the cumulative maximum in ascending p-value order, and cap at 1.
+    """
+    count = len(p_values)
+    adjusted = [0.0] * count
+    running_max = 0.0
+    for rank, index in enumerate(sorted(range(count), key=lambda i: p_values[i])):
+        corrected = min(1.0, (count - rank) * p_values[index])
+        running_max = max(running_max, corrected)
+        adjusted[index] = running_max
+    return adjusted
+
+
 def build_table3(seed_rows: Sequence[Dict[str, str]]) -> List[Dict[str, object]]:
     baseline = select_runs(seed_rows, "Table 8", "RT-DETR-r18", "PVEL-AD")
     gmi = select_runs(seed_rows, "Table 8", "RT-DETR-GMI", "PVEL-AD")
@@ -306,6 +331,7 @@ def build_table3(seed_rows: Sequence[Dict[str, str]]) -> List[Dict[str, object]]
     by_seed_gmi = {str(r["seed_or_run"]): r for r in gmi}
 
     out = []
+    raw_p_values = []
     for metric_name, field in (("mAP50", "map50_pct"), ("mAP50:95", "map50_95_pct")):
         diffs = []
         seed_diffs = {}
@@ -327,6 +353,7 @@ def build_table3(seed_rows: Sequence[Dict[str, str]]) -> List[Dict[str, object]]
         # Exact two-sided Student-t p-value for df=2:
         # p = 1 - |t| / sqrt(t^2 + 2)
         p_value = 1.0 - abs(t_stat) / math.sqrt(t_stat * t_stat + 2.0)
+        raw_p_values.append(p_value)
 
         # 97.5th percentile of t distribution with df=2.
         t_critical_975_df2 = 4.302652729911275
@@ -343,11 +370,13 @@ def build_table3(seed_rows: Sequence[Dict[str, str]]) -> List[Dict[str, object]]
                 "Mean difference (pp)": f"{mean_diff:.2f}",
                 "t": f"{t_stat:.3f}",
                 "df": str(df),
-                "p": f"{p_value:.3f}",
+                "Unadjusted p": f"{p_value:.3f}",
                 "95% CI (pp)": f"[{ci_low:.2f}, {ci_high:.2f}]",
                 "Cohen's dz": f"{cohen_dz:.2f}",
             }
         )
+    for row, adjusted_p in zip(out, holm_adjusted_pvalues(raw_p_values)):
+        row["Holm-adjusted p"] = f"{adjusted_p:.3f}"
     return out
 
 
@@ -671,7 +700,8 @@ def main() -> None:
             "Mean difference (pp)",
             "t",
             "df",
-            "p",
+            "Unadjusted p",
+            "Holm-adjusted p",
             "95% CI (pp)",
             "Cohen's dz",
         ),
@@ -759,7 +789,9 @@ def main() -> None:
     for row in table3:
         print(
             f"  Table 3 {row['Metric']}: mean diff={row['Mean difference (pp)']} pp, "
-            f"p={row['p']}, 95% CI={row['95% CI (pp)']}"
+            f"unadjusted p={row['Unadjusted p']}, "
+            f"Holm-adjusted p={row['Holm-adjusted p']}, "
+            f"unadjusted 95% CI={row['95% CI (pp)']}"
         )
     for row in table11:
         print(f"  Table 11 {row['method']}: F1={row['F1 (%)']}")
@@ -767,4 +799,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 

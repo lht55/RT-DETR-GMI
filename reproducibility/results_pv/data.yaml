@@ -1,0 +1,11 @@
+train: /home/waas/RTDETR-20260307/PV-Multi-Defect/images/train
+val: /home/waas/RTDETR-20260307/PV-Multi-Defect/images/val
+test: /home/waas/RTDETR-20260307/PV-Multi-Defect/images/test
+
+nc: 5
+
+names: ['broken',
+        'black_border',
+        'no_electricity',
+        'hot_spot',
+        'scratch']

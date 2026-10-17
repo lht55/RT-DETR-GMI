@@ -388,14 +388,17 @@ mAP50
 mAP50:95
 ```
 
+For inferential reporting, these comparisons are treated as a family of two exploratory tests. Holm correction is applied at a family-wise significance level of 0.05.
+
 For each metric, the analysis reports:
 
 ```text
 mean paired difference
 t statistic
 degrees of freedom
-p value
-95% confidence interval
+unadjusted p value
+Holm-adjusted p value
+unadjusted 95% confidence interval
 Cohen's dz
 ```
 
@@ -415,20 +418,16 @@ standard deviation of paired differences
 
 The values reported in Table 3 are:
 
-| Metric | Mean difference (pp) | t | df | p | 95% CI (pp) | Cohen's dz |
-| --- | ---: | ---: | ---: | ---: | --- | ---: |
-| mAP50 | 2.20 | 2.477 | 2 | 0.132 | [-1.62, 6.03] | 1.43 |
-| mAP50:95 | 2.31 | 4.975 | 2 | 0.038 | [0.31, 4.30] | 2.87 |
+| Metric | Mean difference (pp) | t | df | Unadjusted p | Holm-adjusted p | 95% CI (pp) | Cohen's dz |
+| --- | ---: | ---: | ---: | ---: | ---: | --- | ---: |
+| mAP50 | 2.20 | 2.477 | 2 | 0.132 | 0.132 | [-1.62, 6.03] | 1.43 |
+| mAP50:95 | 2.31 | 4.975 | 2 | 0.038 | 0.076 | [0.31, 4.30] | 2.87 |
 
-Statistical significance is defined in the manuscript as:
+Holm correction is calculated using full-precision p-values before rounding for display. The reported 95% confidence intervals are unadjusted.
 
-```text
-p < 0.05
-```
+After Holm correction, neither comparison reaches the family-wise significance level of 0.05. RT-DETR-GMI achieved higher scores in all three evaluated paired runs, but these descriptive gains should be distinguished from the inferential conclusions.
 
-Accordingly, the mAP50 comparison does not reach the predefined significance threshold, whereas the mAP50:95 comparison reaches the p < 0.05 threshold.
-
-Because only three paired observations are available, these inferential statistics should be interpreted cautiously and together with the per-seed results and descriptive statistics.
+Because only three paired observations are available, inference remains sensitive to the normality assumption for paired differences. The statistical results should therefore be interpreted cautiously alongside the per-seed results and descriptive statistics.
 
 The underlying per-seed values are available in:
 
@@ -1378,3 +1377,4 @@ and the numerical results underlying the manuscript summaries are available unde
 ```text
 reproducibility/results/
 ```
+
