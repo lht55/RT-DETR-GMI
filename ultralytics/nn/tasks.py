@@ -752,6 +752,12 @@ def parse_model(d, ch, verbose=True, warehouse_manager=None):  # model_dict, inp
         elif m in transformer_modules:
             c2 = ch[f]
             args = [ch[f], *args]
+        elif m is Blocks:
+            # ResNet stages need the input channels and the actual block class.
+            c1, c2 = ch[f], args[0]
+            block = globals()[args[1]] if isinstance(args[1], str) else args[1]
+            args = [c1, c2, block, *args[2:]]
+            c2 *= block.expansion
         elif m in (HGStem, HGBlock):
             c1, cm, c2 = ch[f], args[0], args[1]
             args = [c1, cm, c2, *args[2:]]
