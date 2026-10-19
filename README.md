@@ -358,8 +358,6 @@ Both confusion-matrix filters use strict `>` comparisons. The matrices represent
 
 The integer matrices preserve the original Ultralytics `8.0.201` output. `evaluation_settings.csv` records its background-counting conditions. Figure annotations below `0.005` are suppressed by the original plotting code.
 
-The [dated source and metadata verification record](reproducibility/verification/evaluation_protocol_check_2026-10-19.json) records the checking environment separately from the historical output provenance. That check performs no model inference and is not a rerun of the historical evaluations.
-
 ### Regenerate the manuscript tables
 
 Python 3.9 or later is sufficient; both scripts use only the standard library. From the repository root, run:

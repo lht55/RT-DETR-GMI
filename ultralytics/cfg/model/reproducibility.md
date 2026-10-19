@@ -1253,7 +1253,7 @@ backend = native PyTorch
 
 FPS represents end-to-end inference throughput under the standardized evaluation setting, including preprocessing, model inference, and postprocessing.
 
-Each new evaluation writes numerical metrics and confusion-matrix exports together with `evaluation_settings.json`/`.csv`, including the checkpoint and dataset-YAML hashes, requested and actual arguments, device, package versions, source path, and UTC timestamp. These files document that new evaluation; they do not retrospectively establish the provenance of historical outputs. The [2026-10-19 source and metadata verification record](../../../reproducibility/verification/evaluation_protocol_check_2026-10-19.json) records the checking environment and explicitly distinguishes this no-inference check from historical experiment runs.
+Each new evaluation writes numerical metrics and confusion-matrix exports together with `evaluation_settings.json`/`.csv`, including the checkpoint and dataset-YAML hashes, requested and actual arguments, device, package versions, source path, and UTC timestamp. These files document that new evaluation; they do not retrospectively establish the provenance of historical outputs.
 
 For Tables 4 and 5, architecture selection is based on validation-set performance rather than test-set performance.
 
