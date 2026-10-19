@@ -341,19 +341,24 @@ Detection metrics use a percentage scale (0–100); their SDs use percentage poi
 
 Rows indicate predicted classes and columns indicate true classes. Each column is normalized by its column sum plus `1e-9`, and the released normalized values are rounded to two decimal places on a 0–1 scale.
 
-The archived settings are:
+The archived framework arguments and the independent confusion-matrix settings are:
 
 | Setting | Value |
 | --- | ---: |
-| Validation candidate confidence | 0.001 |
-| Postprocessing IoU | 0.7 |
-| Maximum detections per image | 300 |
+| Framework `conf` argument | 0.001 |
+| Framework `iou` argument | 0.7 |
+| Framework `max_det` argument | 300 |
+| Decoder query count in the released RT-DETR-r18 and RT-DETR-GMI YAMLs | 300 |
 | Confusion-matrix confidence | 0.25 |
 | Confusion-matrix matching IoU | 0.45 |
+
+In this checkout's evaluation path, `RTDETRValidator.postprocess` retains the decoder queries, assigns each query its highest-scoring class, and sorts the queries by confidence. It does not filter predictions using the framework `conf` argument, perform NMS using `iou`, or apply an additional `max_det` truncation to metric candidates. The 300 queries come from the decoder configuration, independently of the recorded `max_det` argument. The inherited `DetectionValidator.plot_predictions` path still uses `max_det` to limit candidates passed to prediction plots. These statements describe the validator's evaluation postprocessing and plotting paths.
 
 Both confusion-matrix filters use strict `>` comparisons. The matrices represent the fixed-seed (`seed=0`) RT-DETR-r18 and RT-DETR-GMI models. The background row records unmatched ground-truth boxes. The background column records unmatched predictions counted by the archived implementation; it is a detection bookkeeping column. Class support counts real ground-truth boxes and includes the background-row false negatives for each defect class.
 
 The integer matrices preserve the original Ultralytics `8.0.201` output. `evaluation_settings.csv` records its background-counting conditions. Figure annotations below `0.005` are suppressed by the original plotting code.
+
+The [dated source and metadata verification record](reproducibility/verification/evaluation_protocol_check_2026-10-19.json) records the checking environment separately from the historical output provenance. That check performs no model inference and is not a rerun of the historical evaluations.
 
 ### Regenerate the manuscript tables
 

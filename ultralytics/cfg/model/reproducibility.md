@@ -1218,20 +1218,29 @@ The model architecture, dataset split, optimization settings, and random seed sh
 
 After the required validation-based model selection and checkpoint selection are complete, the selected checkpoint is evaluated on the fixed test split.
 
-An equivalent Ultralytics evaluation command is:
+From the repository root, use the explicit RT-DETR evaluation entry point below. Replace the placeholders with the selected local `.pt` checkpoint, dataset YAML, and a unique model/seed/test run name:
 
 ```bash
-yolo detect val \
-  model=<BEST_CHECKPOINT> \
-  data=<DATA_CONFIG> \
-  split=test \
-  imgsz=640 \
-  batch=16 \
-  iou=0.7 \
-  max_det=300 \
-  half=False \
-  plots=True
+python tools/val.py \
+  --model "<BEST_CHECKPOINT>" \
+  --data "<DATA_CONFIG>" \
+  --split test \
+  --imgsz 640 \
+  --batch 16 \
+  --conf 0.001 \
+  --iou 0.7 \
+  --max-det 300 \
+  --no-half \
+  --plots \
+  --cm-conf 0.25 \
+  --cm-iou 0.45 \
+  --project runs/val \
+  --name "<RUN_NAME>"
 ```
+
+This script constructs `RTDETR` and binds its evaluation to `RTDETRValidator` explicitly; selecting the RT-DETR evaluation path does not depend on the checkpoint filename or parent-directory name. The `--conf`, `--iou`, and `--max-det` values are framework arguments recorded for traceability. In this checkout's `RTDETRValidator.postprocess`, they do not apply confidence filtering, NMS, or an additional query-count cap to AP/Precision/Recall metric candidates. The released RT-DETR-r18 and RT-DETR-GMI architectures configure 300 decoder queries; the evaluator retains those queries, chooses the highest-scoring class for each query, and sorts them by confidence. The inherited `DetectionValidator.plot_predictions` path still uses `max_det` to limit candidates passed to prediction plots.
+
+The confusion matrix applies its independent filters: prediction confidence `> 0.25` and matching IoU `> 0.45`. These matrix thresholds are separate from AP computation and the evaluated-split maximum-smoothed-mean-F1 operating point used for the reported Precision and Recall.
 
 The principal inference settings reported in the manuscript are:
 
@@ -1243,6 +1252,8 @@ backend = native PyTorch
 ```
 
 FPS represents end-to-end inference throughput under the standardized evaluation setting, including preprocessing, model inference, and postprocessing.
+
+Each new evaluation writes numerical metrics and confusion-matrix exports together with `evaluation_settings.json`/`.csv`, including the checkpoint and dataset-YAML hashes, requested and actual arguments, device, package versions, source path, and UTC timestamp. These files document that new evaluation; they do not retrospectively establish the provenance of historical outputs. The [2026-10-19 source and metadata verification record](../../../reproducibility/verification/evaluation_protocol_check_2026-10-19.json) records the checking environment and explicitly distinguishes this no-inference check from historical experiment runs.
 
 For Tables 4 and 5, architecture selection is based on validation-set performance rather than test-set performance.
 
